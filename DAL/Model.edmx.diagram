@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a806579742ad41e5830f396e7ca4e96f" Name="Diagram1">
+        <EntityTypeShape EntityType="dbprojectModel.area" Width="1.5" PointX="6.125" PointY="6.25" />
+        <EntityTypeShape EntityType="dbprojectModel.category" Width="1.5" PointX="0.5" PointY="1.125" />
+        <EntityTypeShape EntityType="dbprojectModel.city" Width="1.5" PointX="6.75" PointY="3.625" />
+        <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.5" PointY="3.625" />
+        <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="3.375" PointY="7.125" />
+        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="2.5" PointY="0.625" />
+        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="4.5" PointY="0.75" />
+        <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.75" PointY="3.75" />
+        <EntityTypeShape EntityType="dbprojectModel.user" Width="1.5" PointX="2.625" PointY="3.75" />
+        <AssociationConnector Association="dbprojectModel.FK_cities_areas" />
+        <AssociationConnector Association="dbprojectModel.FK_product_category" />
+        <AssociationConnector Association="dbprojectModel.FK_shop_cities" />
+        <AssociationConnector Association="dbprojectModel.FK_history_product" />
+        <AssociationConnector Association="dbprojectModel.FK_history_user" />
+        <AssociationConnector Association="dbprojectModel.FK_listDetails_lists" />
+        <AssociationConnector Association="dbprojectModel.FK_productInShop_product" />
+        <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
