@@ -3,9 +3,14 @@ using BLL;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace WebApiProject.Controllers
+
+
 {
+    [EnableCors(methods: "*", origins: "*", headers: "*")]
+
     public class AreasController : ApiController
     {
         AreaService AreaService = new AreaService();
