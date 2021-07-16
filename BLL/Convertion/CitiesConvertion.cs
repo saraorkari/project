@@ -31,7 +31,7 @@ namespace BLL.Convertion
             {
                 Id = city.Id,
                 Name = city.Name,
-                AreaId = (int)city.AreaId
+                AreaId = city.AreaId
             };
         }
         public static List<city> Convert(List<CityDTO> city)

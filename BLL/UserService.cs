@@ -18,11 +18,11 @@ namespace BLL
         }
 
         // GET: api/Areas/5
-        public UserDTO Get(string name,string password)
+        public UserDTO Get(string id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Password == password&&x.Name==name));
+                Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Id == id));
             }
             return null;
         }

@@ -6,12 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using DTO;
 using BLL;
-using System.Web.Http.Cors;
 
 namespace WebApiProject.Controllers
 {
-    [EnableCors(methods: "*", origins: "*", headers: "*")]
-
     public class UsersController : ApiController
     {
         UserService UserService = new UserService();
@@ -23,9 +20,9 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public UserDTO Get(string name,string password)
+        public UserDTO Get(string id)
         {
-            return UserService.Get(name, password);
+            return UserService.Get(id);
         }
 
         // POST: api/Areas

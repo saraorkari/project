@@ -6,12 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using DTO;
 using BLL;
-using System.Web.Http.Cors;
 
 namespace WebApiProject.Controllers
 {
-    [EnableCors(methods: "*", origins: "*", headers: "*")]
-
     public class ProductInShopController : ApiController
     {
         ProductInShopService ProductInShopService = new ProductInShopService();
