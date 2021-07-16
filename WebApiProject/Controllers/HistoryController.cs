@@ -20,6 +20,7 @@ namespace WebApiProject.Controllers
         public List<HistoryDTO> Get()
         {
             return HistoryService.Get();
+
         }
 
         // GET: api/Areas/5

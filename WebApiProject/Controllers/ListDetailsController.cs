@@ -16,6 +16,7 @@ namespace WebApiProject.Controllers
     {
         ListDetailsService ListDetailsService = new ListDetailsService();
 
+
         // GET: api/Areas
         public List<ListDetailsDTO> Get()
         {
