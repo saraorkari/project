@@ -33,7 +33,7 @@ namespace WebApiProject.Controllers
         [HttpPost]
         public IHttpActionResult Post(UserDTO x)
         {
-            if (x == null||x.Id=="5")
+            if (x == null||x.Id=="8")
             {
                 return BadRequest("לא נשלח מידע");
             }
