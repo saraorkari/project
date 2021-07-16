@@ -19,6 +19,7 @@ namespace WebApiProject.Controllers
         // GET: api/Areas
         public List<UserDTO> Get()
         {
+
             return UserService.Get();
         }
 
@@ -32,7 +33,7 @@ namespace WebApiProject.Controllers
         [HttpPost]
         public IHttpActionResult Post(UserDTO x)
         {
-            if (x == null)
+            if (x == null||x.Id=="5")
             {
                 return BadRequest("לא נשלח מידע");
             }
