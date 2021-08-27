@@ -46,7 +46,7 @@ namespace BLL
                 listDetail ld = db.listDetails.FirstOrDefault(x => x.Id == id);
                 if (ld != null)
                 {
-                    ld.Productld = l.Productld;
+                    ld.CategoryId = l.CaterogyId;
                     ld.ListId = l.ListId;
                     db.SaveChanges();
                     return Convertion.ListDetailsConvertion.Convert(ld);

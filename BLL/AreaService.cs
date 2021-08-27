@@ -14,7 +14,7 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-            return   Convertion.AreaConvertion.Convert( db.areas.ToList());
+                return Convertion.AreaConvertion.Convert( db.areas.ToList());
             }
         }
 

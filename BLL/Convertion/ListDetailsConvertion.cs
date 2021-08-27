@@ -17,7 +17,7 @@ namespace BLL.Convertion
             return new listDetail()
             {
                 Id = listDetail.Id,
-                Productld = listDetail.Productld,
+                CategoryId = listDetail.CaterogyId,
                 ListId = listDetail.ListId
             };
         }
@@ -28,7 +28,7 @@ namespace BLL.Convertion
             return new ListDetailsDTO()
             {
                 Id = listDetail.Id,
-                Productld = listDetail.Productld,
+                CaterogyId = listDetail.CategoryId,
                 ListId = listDetail.ListId
             };
         }

@@ -9,8 +9,7 @@
         <EntityTypeShape EntityType="dbprojectModel.category" Width="1.5" PointX="0.5" PointY="1.125" />
         <EntityTypeShape EntityType="dbprojectModel.city" Width="1.5" PointX="6.75" PointY="3.625" />
         <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.5" PointY="3.625" />
-        <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="3.375" PointY="7.125" />
-        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="0.75" PointY="6.875" />
+        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="0.625" PointY="6.625" />
         <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="2.5" PointY="0.625" />
         <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="4.5" PointY="0.75" />
         <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.75" PointY="3.75" />
@@ -20,9 +19,10 @@
         <AssociationConnector Association="dbprojectModel.FK_shop_cities" />
         <AssociationConnector Association="dbprojectModel.FK_history_product" />
         <AssociationConnector Association="dbprojectModel.FK_history_user" />
-        <AssociationConnector Association="dbprojectModel.FK_listDetails_lists" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_product" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
+        <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="2.875" PointY="6.5" IsExpanded="true" />
+        <AssociationConnector Association="dbprojectModel.FK_listDetails_lists" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

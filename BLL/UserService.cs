@@ -22,9 +22,8 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Password == password&&x.Name==name));
+               return Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Password == password&&x.Name==name));
             }
-            return null;
         }
 
         // POST: api/Areas
@@ -34,8 +33,9 @@ namespace BLL
             {
                 user user = db.users.Add(Convertion.UsersConvertion.Convert(u));
                 db.SaveChanges();
-                return Convertion.UsersConvertion.Convert(user);
+                Convertion.UsersConvertion.Convert(user);
             }
+            return null;
         }
 
         // PUT: api/Areas/5

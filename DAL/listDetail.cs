@@ -15,9 +15,9 @@ namespace DAL
     public partial class listDetail
     {
         public int Id { get; set; }
-        public int Productld { get; set; }
+        public int CategoryId { get; set; }
         public int ListId { get; set; }
     
-        public virtual list list { get; set; }
+        public virtual category category { get; set; }
     }
 }
