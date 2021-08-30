@@ -68,7 +68,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Productld" Type="int" Nullable="false" />
           <Property Name="ShopId" Type="int" Nullable="false" />
-          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="shop">
           <Key>
@@ -125,7 +125,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_listDetails_lists">
+        <Association Name="FK_listDetails_category">
           <End Role="category" Type="Self.category" Multiplicity="1" />
           <End Role="listDetails" Type="Self.listDetails" Multiplicity="*" />
           <ReferentialConstraint>
@@ -208,7 +208,7 @@
             <End Role="user" EntitySet="user" />
             <End Role="history" EntitySet="history" />
           </AssociationSet>
-          <AssociationSet Name="FK_listDetails_lists" Association="Self.FK_listDetails_lists">
+          <AssociationSet Name="FK_listDetails_category" Association="Self.FK_listDetails_category">
             <End Role="category" EntitySet="category" />
             <End Role="listDetails" EntitySet="listDetails" />
           </AssociationSet>
