@@ -10,7 +10,7 @@ namespace DTO
         public int Id { get; set; }
         public int Productld { get; set; }
         public int ShopId { get; set; }
-        public float Price { get; set; }
+        public double Price { get; set; }
        
        
     }

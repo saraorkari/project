@@ -17,7 +17,7 @@ namespace DAL
         public int Id { get; set; }
         public int Productld { get; set; }
         public int ShopId { get; set; }
-        public int Price { get; set; }
+        public double Price { get; set; }
     
         public virtual product product { get; set; }
         public virtual shop shop { get; set; }
