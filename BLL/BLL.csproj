@@ -52,7 +52,6 @@
     <Compile Include="AreaService.cs" />
     <Compile Include="CatogoryService.cs" />
     <Compile Include="CityService.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Convertion\AreaConvertion.cs" />
     <Compile Include="Convertion\CategoryConvertion.cs" />
     <Compile Include="Convertion\CitiesConvertion.cs" />

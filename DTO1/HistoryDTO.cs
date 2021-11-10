@@ -9,7 +9,7 @@ namespace DTO
     public class HistoryDTO
     {
         public int Id { get; set; }
-        public int Productld { get; set; }
+        public string ProductName { get; set; }
         public string UserId { get; set; }
 
         

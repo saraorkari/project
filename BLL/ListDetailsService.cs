@@ -18,13 +18,14 @@ namespace BLL
         }
 
         // GET: api/Areas/5
-        public ListDetailsDTO Get(int id)
+        public List<CategoryDTO> Get(int id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                Convertion.ListDetailsConvertion.Convert(db.listDetails.FirstOrDefault(x => x.Id == id));
+
+                return Convertion.CategoryConvertion.Convert(db.categories.Where(x => x.listDetails.Any(y => y.ListId == id)).ToList());
             }
-            return null;
+
         }
 
         // POST: api/Areas

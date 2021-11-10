@@ -17,7 +17,7 @@ namespace BLL.Convertion
             return new history()
             {
                 Id = history.Id,
-                Productld = history.Productld,
+                ProductName = history.ProductName,
                 UserId = history.UserId
             };
         }
@@ -28,7 +28,7 @@ namespace BLL.Convertion
             return new HistoryDTO()
             {
                 Id = history.Id,
-                Productld = history.Productld,
+                ProductName = history.ProductName,
                 UserId = history.UserId
             };
         }

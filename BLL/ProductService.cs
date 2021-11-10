@@ -27,7 +27,14 @@ namespace BLL
             }
             return null;
         }
-
+        public List<ProductDTO> Get(string SearcText)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                Convertion.ProductConvertion.Convert(db.products.Where(x => x.Name.Contains(SearcText)).ToList());
+            }
+            return null;
+        }
         // POST: api/Areas
         public ProductDTO Post(ProductDTO p)
         {

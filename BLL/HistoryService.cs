@@ -26,7 +26,13 @@ namespace BLL
             }
             return null;
         }
-
+        public List<HistoryDTO> Get(string UserId)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                return Convertion.HistoryConvertion.Convert(db.histories.Where(x => x.UserId == UserId).ToList());
+            }
+        }
         // POST: api/Areas
         public HistoryDTO Post(HistoryDTO h)
         {
@@ -46,7 +52,7 @@ namespace BLL
                 history hh = db.histories.FirstOrDefault(x => x.Id == id);
                 if (hh != null)
                 {
-                    hh.Productld = h.Productld;
+                    hh.ProductName = h.ProductName;
                     hh.UserId = h.UserId;
                     db.SaveChanges();
                     return Convertion.HistoryConvertion.Convert(hh);

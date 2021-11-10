@@ -23,11 +23,17 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public UserDTO Get(string name,string password)
+        public UserDTO Get(string id)
         {
-            return UserService.Get(name, password);
+            return UserService.Get(id);
         }
-
+        public IHttpActionResult Get(string UserName, string pass)
+        {
+            UserDTO x = UserService.Get(pass, UserName);
+            if (x != null)
+                return Ok(x);
+            return BadRequest();
+        }
         // POST: api/Areas
         [HttpPost]
         public IHttpActionResult Post(UserDTO x)
@@ -38,7 +44,11 @@ namespace WebApiProject.Controllers
             }
             if (x.Id == "")
                 return NotFound();
-            return Ok(UserService.Post(x));
+            string mass = "";
+            x = UserService.Post(x, ref mass);
+            if (x != null)
+                return Ok(x);
+            return BadRequest(mass);
         }
 
         // PUT: api/Areas/5

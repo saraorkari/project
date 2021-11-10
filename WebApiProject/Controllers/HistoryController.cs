@@ -22,7 +22,13 @@ namespace WebApiProject.Controllers
             return HistoryService.Get();
 
         }
-
+        public IHttpActionResult Get(string UserId)
+        {
+            List<HistoryDTO> x = HistoryService.Get(UserId);
+            if (x != null)
+                return Ok(x);
+            return BadRequest();
+        }
         // GET: api/Areas/5
         public HistoryDTO Get(int id)
         {

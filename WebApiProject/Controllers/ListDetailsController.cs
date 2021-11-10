@@ -24,7 +24,7 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public ListDetailsDTO Get(int id)
+        public List<CategoryDTO> Get(int id)
         {
             return ListDetailsService.Get(id);
         }

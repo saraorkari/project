@@ -18,24 +18,51 @@ namespace BLL
         }
 
         // GET: api/Areas/5
-        public UserDTO Get(string name,string password)
+        public UserDTO Get(string pass, string userName)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-               return Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Password == password&&x.Name==name));
+                return Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => (x.Id == userName || x.Email == userName) && x.Password == pass));
             }
         }
 
-        // POST: api/Areas
-        public UserDTO Post(UserDTO u)
+        // GET: api/Areas/5
+        public UserDTO Get(string id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                user user = db.users.Add(Convertion.UsersConvertion.Convert(u));
-                db.SaveChanges();
-                Convertion.UsersConvertion.Convert(user);
+                Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Id == id));
             }
             return null;
+        }
+        public bool IsIdExti(string Id)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                return db.users.Any(x => x.Id == Id);
+            }
+        }
+        public bool IsEmailExti(string Email)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                return db.users.Any(x => x.Email == Email);
+            }
+        }
+        // POST: api/Areas
+        public UserDTO Post(UserDTO u, ref string Mass)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                if (IsIdExti(u.Id))
+                {
+                    Mass = "תעודת זהות שמורה במערכת נא שחזר סיסמא";
+                    return null;
+                }
+                user user = db.users.Add(Convertion.UsersConvertion.Convert(u));
+                db.SaveChanges();
+                return Convertion.UsersConvertion.Convert(user);
+            }
         }
 
         // PUT: api/Areas/5

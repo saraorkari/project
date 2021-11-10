@@ -15,10 +15,9 @@ namespace DAL
     public partial class history
     {
         public int Id { get; set; }
-        public int Productld { get; set; }
+        public string ProductName { get; set; }
         public string UserId { get; set; }
     
-        public virtual product product { get; set; }
         public virtual user user { get; set; }
     }
 }

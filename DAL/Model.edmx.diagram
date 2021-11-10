@@ -8,21 +8,20 @@
         <EntityTypeShape EntityType="dbprojectModel.area" Width="1.5" PointX="6.125" PointY="6.25" />
         <EntityTypeShape EntityType="dbprojectModel.category" Width="1.5" PointX="0.5" PointY="1.125" />
         <EntityTypeShape EntityType="dbprojectModel.city" Width="1.5" PointX="6.75" PointY="3.625" />
-        <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.5" PointY="3.625" />
         <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="0.625" PointY="6.625" />
         <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="2.5" PointY="0.625" />
         <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="dbprojectModel.user" Width="1.5" PointX="2.625" PointY="3.75" />
         <AssociationConnector Association="dbprojectModel.FK_cities_areas" />
         <AssociationConnector Association="dbprojectModel.FK_product_category" />
         <AssociationConnector Association="dbprojectModel.FK_shop_cities" />
-        <AssociationConnector Association="dbprojectModel.FK_history_product" />
-        <AssociationConnector Association="dbprojectModel.FK_history_user" />
         <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="2.875" PointY="6.5" IsExpanded="true" />
         <AssociationConnector Association="dbprojectModel.FK_listDetails_lists" />
-        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="7" PointY="0.75" />
+        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="4.25" PointY="0.875" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_product" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
+        <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="dbprojectModel.user" Width="1.5" PointX="2.875" PointY="3.5" />
+        <AssociationConnector Association="dbprojectModel.FK_history_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

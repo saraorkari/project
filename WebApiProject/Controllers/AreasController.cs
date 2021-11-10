@@ -6,8 +6,6 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 
 namespace WebApiProject.Controllers
-
-
 {
     [EnableCors(methods: "*", origins: "*", headers: "*")]
 

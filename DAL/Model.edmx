@@ -32,7 +32,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Productld" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="9" Nullable="false" />
         </EntityType>
         <EntityType Name="listDetails">
@@ -98,18 +98,6 @@
             </Principal>
             <Dependent Role="cities">
               <PropertyRef Name="AreaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_history_product">
-          <End Role="product" Type="Self.product" Multiplicity="1" />
-          <End Role="history" Type="Self.history" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="history">
-              <PropertyRef Name="Productld" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -200,10 +188,6 @@
             <End Role="areas" EntitySet="areas" />
             <End Role="cities" EntitySet="cities" />
           </AssociationSet>
-          <AssociationSet Name="FK_history_product" Association="Self.FK_history_product">
-            <End Role="product" EntitySet="product" />
-            <End Role="history" EntitySet="history" />
-          </AssociationSet>
           <AssociationSet Name="FK_history_user" Association="Self.FK_history_user">
             <End Role="user" EntitySet="user" />
             <End Role="history" EntitySet="history" />
@@ -237,11 +221,9 @@
           <EntitySet Name="areas" EntityType="dbprojectModel.area" />
           <EntitySet Name="categories" EntityType="dbprojectModel.category" />
           <EntitySet Name="cities" EntityType="dbprojectModel.city" />
-          <EntitySet Name="histories" EntityType="dbprojectModel.history" />
           <EntitySet Name="lists" EntityType="dbprojectModel.list" />
           <EntitySet Name="products" EntityType="dbprojectModel.product" />
           <EntitySet Name="shops" EntityType="dbprojectModel.shop" />
-          <EntitySet Name="users" EntityType="dbprojectModel.user" />
           <AssociationSet Name="FK_cities_areas" Association="dbprojectModel.FK_cities_areas">
             <End Role="area" EntitySet="areas" />
             <End Role="city" EntitySet="cities" />
@@ -253,14 +235,6 @@
           <AssociationSet Name="FK_shop_cities" Association="dbprojectModel.FK_shop_cities">
             <End Role="city" EntitySet="cities" />
             <End Role="shop" EntitySet="shops" />
-          </AssociationSet>
-          <AssociationSet Name="FK_history_product" Association="dbprojectModel.FK_history_product">
-            <End Role="product" EntitySet="products" />
-            <End Role="history" EntitySet="histories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
-            <End Role="user" EntitySet="users" />
-            <End Role="history" EntitySet="histories" />
           </AssociationSet>
           <EntitySet Name="listDetails" EntityType="dbprojectModel.listDetail" />
           <AssociationSet Name="FK_listDetails_lists" Association="dbprojectModel.FK_listDetails_lists">
@@ -275,6 +249,12 @@
           <AssociationSet Name="FK_productInShop_shop" Association="dbprojectModel.FK_productInShop_shop">
             <End Role="shop" EntitySet="shops" />
             <End Role="productInShop" EntitySet="productInShops" />
+          </AssociationSet>
+          <EntitySet Name="histories" EntityType="dbprojectModel.history" />
+          <EntitySet Name="users" EntityType="dbprojectModel.user" />
+          <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="history" EntitySet="histories" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="area">
@@ -304,16 +284,6 @@
           <NavigationProperty Name="area" Relationship="dbprojectModel.FK_cities_areas" FromRole="city" ToRole="area" />
           <NavigationProperty Name="shops" Relationship="dbprojectModel.FK_shop_cities" FromRole="city" ToRole="shop" />
         </EntityType>
-        <EntityType Name="history">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Productld" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="product" Relationship="dbprojectModel.FK_history_product" FromRole="history" ToRole="product" />
-          <NavigationProperty Name="user" Relationship="dbprojectModel.FK_history_user" FromRole="history" ToRole="user" />
-        </EntityType>
         <EntityType Name="list">
           <Key>
             <PropertyRef Name="Id" />
@@ -332,7 +302,6 @@
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="category" Relationship="dbprojectModel.FK_product_category" FromRole="product" ToRole="category" />
-          <NavigationProperty Name="histories" Relationship="dbprojectModel.FK_history_product" FromRole="product" ToRole="history" />
           <NavigationProperty Name="productInShops" Relationship="dbprojectModel.FK_productInShop_product" FromRole="product" ToRole="productInShop" />
         </EntityType>
         <EntityType Name="shop">
@@ -344,18 +313,6 @@
           <Property Name="CityId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="city" Relationship="dbprojectModel.FK_shop_cities" FromRole="shop" ToRole="city" />
           <NavigationProperty Name="productInShops" Relationship="dbprojectModel.FK_productInShop_shop" FromRole="shop" ToRole="productInShop" />
-        </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Phon" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="histories" Relationship="dbprojectModel.FK_history_user" FromRole="user" ToRole="history" />
         </EntityType>
         <Association Name="FK_cities_areas">
           <End Type="dbprojectModel.area" Role="area" Multiplicity="0..1" />
@@ -390,30 +347,6 @@
             </Principal>
             <Dependent Role="shop">
               <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_history_product">
-          <End Type="dbprojectModel.product" Role="product" Multiplicity="1" />
-          <End Type="dbprojectModel.history" Role="history" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="history">
-              <PropertyRef Name="Productld" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_history_user">
-          <End Type="dbprojectModel.user" Role="user" Multiplicity="1" />
-          <End Type="dbprojectModel.history" Role="history" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="history">
-              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -473,6 +406,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="history">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="user" Relationship="dbprojectModel.FK_history_user" FromRole="history" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phon" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="histories" Relationship="dbprojectModel.FK_history_user" FromRole="user" ToRole="history" />
+        </EntityType>
+        <Association Name="FK_history_user">
+          <End Type="dbprojectModel.user" Role="user" Multiplicity="1" />
+          <End Type="dbprojectModel.history" Role="history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -500,15 +466,6 @@
               <MappingFragment StoreEntitySet="cities">
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="histories">
-            <EntityTypeMapping TypeName="dbprojectModel.history">
-              <MappingFragment StoreEntitySet="history">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Productld" ColumnName="Productld" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -542,18 +499,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="dbprojectModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="Phon" ColumnName="Phon" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="listDetails">
             <EntityTypeMapping TypeName="dbprojectModel.listDetail">
               <MappingFragment StoreEntitySet="listDetails">
@@ -569,6 +514,27 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ShopId" ColumnName="ShopId" />
                 <ScalarProperty Name="Productld" ColumnName="Productld" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="histories">
+            <EntityTypeMapping TypeName="dbprojectModel.history">
+              <MappingFragment StoreEntitySet="history">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="dbprojectModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Phon" ColumnName="Phon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
