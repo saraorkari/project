@@ -19,5 +19,6 @@ namespace DAL
         public int ListId { get; set; }
     
         public virtual category category { get; set; }
+        public virtual list list { get; set; }
     }
 }

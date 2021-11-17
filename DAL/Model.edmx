@@ -125,6 +125,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_listDetails_list">
+          <End Role="lists" Type="Self.lists" Multiplicity="1" />
+          <End Role="listDetails" Type="Self.listDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="lists">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="listDetails">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_product_category">
           <End Role="category" Type="Self.category" Multiplicity="1" />
           <End Role="product" Type="Self.product" Multiplicity="*" />
@@ -196,6 +208,10 @@
             <End Role="category" EntitySet="category" />
             <End Role="listDetails" EntitySet="listDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_listDetails_list" Association="Self.FK_listDetails_list">
+            <End Role="lists" EntitySet="lists" />
+            <End Role="listDetails" EntitySet="listDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_product_category" Association="Self.FK_product_category">
             <End Role="category" EntitySet="category" />
             <End Role="product" EntitySet="product" />
@@ -236,11 +252,6 @@
             <End Role="city" EntitySet="cities" />
             <End Role="shop" EntitySet="shops" />
           </AssociationSet>
-          <EntitySet Name="listDetails" EntityType="dbprojectModel.listDetail" />
-          <AssociationSet Name="FK_listDetails_lists" Association="dbprojectModel.FK_listDetails_lists">
-            <End Role="category" EntitySet="categories" />
-            <End Role="listDetail" EntitySet="listDetails" />
-          </AssociationSet>
           <EntitySet Name="productInShops" EntityType="dbprojectModel.productInShop" />
           <AssociationSet Name="FK_productInShop_product" Association="dbprojectModel.FK_productInShop_product">
             <End Role="product" EntitySet="products" />
@@ -255,6 +266,15 @@
           <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
             <End Role="user" EntitySet="users" />
             <End Role="history" EntitySet="histories" />
+          </AssociationSet>
+          <EntitySet Name="listDetails" EntityType="dbprojectModel.listDetail" />
+          <AssociationSet Name="FK_listDetails_category" Association="dbprojectModel.FK_listDetails_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="listDetail" EntitySet="listDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_listDetails_list" Association="dbprojectModel.FK_listDetails_list">
+            <End Role="list" EntitySet="lists" />
+            <End Role="listDetail" EntitySet="listDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="area">
@@ -272,7 +292,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="products" Relationship="dbprojectModel.FK_product_category" FromRole="category" ToRole="product" />
-          <NavigationProperty Name="listDetails" Relationship="dbprojectModel.FK_listDetails_lists" FromRole="category" ToRole="listDetail" />
+          <NavigationProperty Name="listDetails" Relationship="dbprojectModel.FK_listDetails_category" FromRole="category" ToRole="listDetail" />
         </EntityType>
         <EntityType Name="city">
           <Key>
@@ -290,6 +310,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="listDetails" Relationship="dbprojectModel.FK_listDetails_list" FromRole="list" ToRole="listDetail" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -347,27 +368,6 @@
             </Principal>
             <Dependent Role="shop">
               <PropertyRef Name="CityId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="listDetail">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="ListId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="category" Relationship="dbprojectModel.FK_listDetails_lists" FromRole="listDetail" ToRole="category" />
-        </EntityType>
-        <Association Name="FK_listDetails_lists">
-          <End Type="dbprojectModel.category" Role="category" Multiplicity="1" />
-          <End Type="dbprojectModel.listDetail" Role="listDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="listDetail">
-              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -439,6 +439,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="listDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ListId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="category" Relationship="dbprojectModel.FK_listDetails_category" FromRole="listDetail" ToRole="category" />
+          <NavigationProperty Name="list" Relationship="dbprojectModel.FK_listDetails_list" FromRole="listDetail" ToRole="list" />
+        </EntityType>
+        <Association Name="FK_listDetails_category">
+          <End Type="dbprojectModel.category" Role="category" Multiplicity="1" />
+          <End Type="dbprojectModel.listDetail" Role="listDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="listDetail">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_listDetails_list">
+          <End Type="dbprojectModel.list" Role="list" Multiplicity="1" />
+          <End Type="dbprojectModel.listDetail" Role="listDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="list">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="listDetail">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -499,15 +533,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="listDetails">
-            <EntityTypeMapping TypeName="dbprojectModel.listDetail">
-              <MappingFragment StoreEntitySet="listDetails">
-                <ScalarProperty Name="ListId" ColumnName="ListId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="productInShops">
             <EntityTypeMapping TypeName="dbprojectModel.productInShop">
               <MappingFragment StoreEntitySet="productInShop">
@@ -535,6 +560,15 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="listDetails">
+            <EntityTypeMapping TypeName="dbprojectModel.listDetail">
+              <MappingFragment StoreEntitySet="listDetails">
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

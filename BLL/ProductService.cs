@@ -19,13 +19,13 @@ namespace BLL
         }
 
         // GET: api/Areas/5
-        public ProductDTO Get(int id)
+
+        public List<ProductDTO> Get(int id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                Convertion.ProductConvertion.Convert(db.products.FirstOrDefault(x => x.Id == id));
+                return Convertion.ProductConvertion.Convert(db.products.Where(x => x.CategoryId == id).ToList());
             }
-            return null;
         }
         public List<ProductDTO> Get(string SearcText)
         {

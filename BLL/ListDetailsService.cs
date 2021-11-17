@@ -22,11 +22,9 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-
                 return Convertion.CategoryConvertion.Convert(db.categories.Where(x => x.listDetails.Any(y => y.ListId == id)).ToList());
             }
-
-        }
+        } 
 
         // POST: api/Areas
         public ListDetailsDTO Post(ListDetailsDTO l)

@@ -106,6 +106,7 @@
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\ListDetailsController.cs" />
     <Compile Include="Controllers\ListsController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductInShopController.cs" />
     <Compile Include="Controllers\ShopController.cs" />

@@ -23,7 +23,7 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public ProductDTO Get(int id)
+        public List<ProductDTO> Get(int id)
         {
             return ProductService.Get(id);
         }
