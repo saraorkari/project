@@ -37,6 +37,19 @@ namespace BLL
                 return Convertion.ListsConvertion.Convert(list);
             }
         }
+        public void Post(string name)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                if (!db.lists.Any(x => x.Name == name))
+                {
+                    ListDTO l = new ListDTO();
+                    l.Name = name;
+                    db.lists.Add(Convertion.ListsConvertion.Convert(l));
+                    db.SaveChanges();
+                }
+            }
+        }
 
         // PUT: api/Areas/5
         public ListDTO Put(int id, ListDTO l)

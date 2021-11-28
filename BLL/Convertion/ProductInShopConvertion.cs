@@ -31,7 +31,9 @@ namespace BLL.Convertion
                 Id = productInShop.Id,
                 Price = productInShop.Price,
                 Productld = productInShop.Productld,
-                ShopId = productInShop.ShopId
+                ShopId = productInShop.ShopId,
+                Product=ProductConvertion.Convert(productInShop.product),
+                Shop=ShopConvertion.Convert(productInShop.shop)
             };
         }
         public static List<productInShop> Convert(List<ProductInShopDTO> productInShop)

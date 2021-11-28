@@ -18,7 +18,8 @@ namespace BLL.Convertion
             return new area()
             {
                 Id = area.Id,
-                Name = area.Name
+                Name = area.Name,
+                //  cityes=CitiesConvertion.Convert(area.cityes)
             };
         }
         public static AreaDTO Convert(area area)
@@ -28,7 +29,8 @@ namespace BLL.Convertion
             return new AreaDTO()
             {
                 Id = area.Id,
-                Name = area.Name
+                Name = area.Name,
+                // cityes = CitiesConvertion.Convert(area.cities.ToList())
             };
         }
         public static List<area> Convert(List<AreaDTO> area)

@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="html\search.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +136,10 @@
     <ProjectReference Include="..\BLL\BLL.csproj">
       <Project>{3182187d-2a12-4a65-b498-196a6b953ab3}</Project>
       <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{C579285D-81C2-4FB8-A32C-97F4B349BE29}</Project>
+      <Name>DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\DTO1\DTO.csproj">
       <Project>{1d470aee-a0e8-4672-b493-18d66d5f7131}</Project>

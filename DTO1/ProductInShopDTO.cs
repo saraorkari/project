@@ -11,7 +11,8 @@ namespace DTO
         public int Productld { get; set; }
         public int ShopId { get; set; }
         public double Price { get; set; }
-       
-       
+
+        public  ProductDTO Product { get; set; }
+        public ShopDTO Shop { get; set; }
     }
 }

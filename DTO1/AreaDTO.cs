@@ -9,7 +9,7 @@ namespace DTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-       
+        //public List<CityDTO> cityes { get; set; }
         //public Area(areas a)
         //{
         //    AreaId = a.areaId;

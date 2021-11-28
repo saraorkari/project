@@ -34,13 +34,29 @@ namespace BLL
             }
         }
         // POST: api/Areas
-        public HistoryDTO Post(HistoryDTO h)
+        public List<ProductInShopDTO> Post(HistoryDTO h)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                history history = db.histories.Add(Convertion.HistoryConvertion.Convert(h));
-                db.SaveChanges();
-                return Convertion.HistoryConvertion.Convert(history);
+                history history = db.histories.FirstOrDefault(x => x.UserId == h.UserId && x.ProductName == h.ProductName);
+                if (history == null)
+                {
+                    history = db.histories.Add(Convertion.HistoryConvertion.Convert(h));
+                    db.SaveChanges();
+                };
+                List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(h.ProductName)).ToList();
+                if (h.SendMail)
+                {
+                    MailService mail = new MailService();
+                    string body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\search.txt");
+                    body = body.Replace("{serchName}", h.ProductName);
+                    string content = "";
+                    g.ForEach(x => { content += "<tr><td>"+x.product.Name+"</td><td>"+x.Price+"</td><td>"+x.shop.Name+"</td></tr>"; });
+                    body = body.Replace("{content}", content);
+
+                    mail.send(history.user.Email, body, "subject", "רשימת המוצרים המתאימים לחיפוש שבחרתם");
+                }
+                return Convertion.ProductInShopConvertion.Convert(g);
             }
         }
 

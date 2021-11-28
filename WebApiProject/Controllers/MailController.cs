@@ -1,84 +1,72 @@
-﻿using System;
+﻿using BLL;
+using DAL;
+using DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace WebApiProject.Controllers
-{ }
-    //public class MailController : ApiController
-    //{
-        //    // GET api/<controller>
-        //    public IEnumerable<string> Get()
-        //    {
-        //        return new string[] { "value1", "value2" };
-        //    }
+{
+    [EnableCors(methods: "*", origins: "*", headers: "*")]
+    public class MailController : ApiController
+    {
+        // GET api/mail
+        MailService mailService = new MailService();
+        public void Get(string type, string mailOrId, string productName)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                MailService mail = new MailService();
+                user user = db.users.FirstOrDefault(x => x.Id == mailOrId || x.Email == mailOrId);
+                string body="", subject="";
+                if (type == "update")
+                {
+                    List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(productName)).ToList();
+                    subject = "עדכון על ירידת מחיר";
+                    body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\search.txt");
+                    body = body.Replace("{serchName}", productName);
+                    string content = "";
+                    g.ForEach(x => { content += "<tr><td>" + x.product.Name + "</td><td>" + x.Price + "</td><td>" + x.shop.Name + "</td></tr>"; });
+                    body = body.Replace("{content}", content);
+                }
+                else if (type == "password")
+                {
+                    subject = "הסיסמא שלך";
+                    body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\password.txt");
+                }
+                mail.send(user.Email, body, subject, "saraor1412@gmail.com");
+            }
+        }
 
-        //    // GET api/<controller>/5
-        //    public string Get(int id)
-        //    {
-        //        return "value";
-        //    }
+        // GET api/mail/5
+        public string Get(int id)
+        {
+            return "value";
+        }
 
-        //    // POST api/<controller>
-        //    public void Post([FromBody]string value)
-        //    {
-        //    }
+        // POST api/<controller>
+        public void Post([FromBody]string value)
+        {
+        }
 
-        //    // PUT api/<controller>/5
-        //    public void Put(int id, [FromBody]string value)
-        //    {
-        //    }
+        // PUT api/<controller>/5
+        public void Put(int id, [FromBody]string value)
+        {
+        }
 
-        //    // DELETE api/<controller>/5
-        //    public void Delete(int id)
-        //    {
-        //    }
+        // DELETE api/<controller>/5
+        public void Delete(int id)
+        {
+        }
 
-//        //יצירת אוביקט MailMessage
-//        MailMessage mail = new MailMessage();
-
-//        //למי לשלוח (יש אפשרות להוסיף כמה נמענים) 
-//        mail.To.Add(“toEmailAddress”); 
-
-//        //כתובת מייל לשלוח ממנה
-//        mail.From = new MailAddress(“fromEmailAddress”);
-
-//        // נושא ההודעה
-//        mail.Subject = “mailSubject”; 
-
-//        //תוכן ההודעה ב- HTML
-//        mail.Body = “mailBody;”
-
-//        //הגדרת תוכן ההודעה ל - HTML 
-//        mail.IsBodyHtml = true; 
-
-//        // Smtp יצירת אוביקט 
-//        SmtpClient smtp = new SmtpClient();
-
-//        //הגדרת השרת של גוגל
-//        smtp.Host = "smtp.gmail.com";
+    }
+}
 
 
-//        //הגדרת פרטי הכניסה לחשבון גימייל
-//        smtp.Credentials = new System.Net.NetworkCredential(
-//		“myGmailEmailAddress @gmail.com", "myGmailPassword");
-//        //אפשור SSL (חובה(
-//        smtp.EnableSsl = true;
-//        try
-//        {
-//            //שליחת ההודעה
-//             smtp.Send(mail);
-//        }   
-//        catch (Exception ex)
-//        {
-//                //תפיסה וטיפול בשגיאות
-//                txtMessage.Text = ex.ToString();
-//        }
-//    }
-
-//}
 
 

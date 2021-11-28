@@ -65,6 +65,7 @@
     <Compile Include="HistoryService.cs" />
     <Compile Include="ListDetailsService.cs" />
     <Compile Include="ListService.cs" />
+    <Compile Include="MailService.cs" />
     <Compile Include="ProductInShopService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
