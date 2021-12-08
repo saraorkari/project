@@ -45,17 +45,17 @@ namespace BLL
                     db.SaveChanges();
                 };
                 List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(h.ProductName)).ToList();
-                if (h.SendMail)
-                {
-                    MailService mail = new MailService();
-                    string body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\search.txt");
-                    body = body.Replace("{serchName}", h.ProductName);
-                    string content = "";
-                    g.ForEach(x => { content += "<tr><td>"+x.product.Name+"</td><td>"+x.Price+"</td><td>"+x.shop.Name+"</td></tr>"; });
-                    body = body.Replace("{content}", content);
+                //if (h.SendMail)
+                //{
+                //    MailService mail = new MailService();
+                //    string body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\search.txt");
+                //    body = body.Replace("{serchName}", h.ProductName);
+                //    string content = "";
+                //    g.ForEach(x => { content += "<tr><td>"+x.product.Name+"</td><td>"+x.Price+"</td><td>"+x.shop.Name+"</td></tr>"; });
+                //    body = body.Replace("{content}", content);
 
-                    mail.send(history.user.Email, body, "subject", "רשימת המוצרים המתאימים לחיפוש שבחרתם");
-                }
+                //    mail.send(history.user.Email, body, "subject", "רשימת המוצרים המתאימים לחיפוש שבחרתם");
+                //}
                 return Convertion.ProductInShopConvertion.Convert(g);
             }
         }

@@ -35,30 +35,61 @@ namespace BLL
             }
             return null;
         }
-        public bool IsIdExti(string Id)
+        public bool IsIdExit(string Id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
                 return db.users.Any(x => x.Id == Id);
             }
         }
-        public bool IsEmailExti(string Email)
+        public bool IsPassExit(string pass)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                return db.users.Any(x => x.Password == pass);
+            }
+        }
+        public bool IsEmailExit(string Email)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
                 return db.users.Any(x => x.Email == Email);
             }
         }
+        public string Pass()
+        {
+            StringBuilder builder = new StringBuilder();
+            Random rand;
+            while (!IsPassExit(builder.ToString()) && builder.Length < 4)
+            {
+                rand = new Random();
+                char ch = (char)rand.Next(23, 126);
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
         // POST: api/Areas
         public UserDTO Post(UserDTO u, ref string Mass)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                if (IsIdExti(u.Id))
+                if (IsIdExit(u.Id))
                 {
                     Mass = "תעודת זהות שמורה במערכת נא שחזר סיסמא";
                     return null;
                 }
+                if (IsEmailExit(u.Email))
+                {
+                    Mass = "מייל זה קיים במערכת";
+                    return null;
+                }
+                if (IsPassExit(u.Password))
+                {
+                    string pass = Pass();
+                    Mass = " סיסמא קיימת החלף סיסמא - תוכל להשתמש בסיסמא" + pass + " ";
+                    return null;
+                }
+                Mass = "ההרשמה בוצעה בהצלחה!!!";
                 user user = db.users.Add(Convertion.UsersConvertion.Convert(u));
                 db.SaveChanges();
                 return Convertion.UsersConvertion.Convert(user);

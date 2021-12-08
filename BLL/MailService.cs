@@ -21,12 +21,12 @@ namespace BLL
                 return reader.ReadToEnd();
             }
         }
-        public void send(string toMail, string body, string subject, string returnMail)
+        public string send(string toMail, string body, string subject, string returnMail)
         {
             MailMessage mail = new MailMessage();
             //למי לשלוח (יש אפשרות להוסיף כמה נמענים) 
             mail.To.Add(toMail);
-            //mail.ReplyToList.Add(returnMail);
+            mail.ReplyToList.Add(returnMail);
             //כתובת מייל לשלוח ממנה
             mail.From = new MailAddress("pro1ject2@gmail.com");
 
@@ -57,8 +57,9 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                return ex.ToString();
             }
+            return "המייל נשלח בהצחלה";
         }
     }
 }

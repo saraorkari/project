@@ -17,18 +17,22 @@ namespace WebApiProject.Controllers
     {
         // GET api/mail
         MailService mailService = new MailService();
-        public void Get(string type, string mailOrId, string productName)
+        public IHttpActionResult Get(string type, string mailOrId, string productName)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                MailService mail = new MailService();
+                MailService MailService = new MailService();
                 user user = db.users.FirstOrDefault(x => x.Id == mailOrId || x.Email == mailOrId);
-                string body="", subject="";
+                if (user == null)
+                {
+                    return BadRequest("משתמש לא קיים - להרשמה->");
+                }
+                string body = "", subject = "", password = "";
                 if (type == "update")
                 {
                     List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(productName)).ToList();
                     subject = "עדכון על ירידת מחיר";
-                    body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\search.txt");
+                    body = MailService.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\search.txt");
                     body = body.Replace("{serchName}", productName);
                     string content = "";
                     g.ForEach(x => { content += "<tr><td>" + x.product.Name + "</td><td>" + x.Price + "</td><td>" + x.shop.Name + "</td></tr>"; });
@@ -37,9 +41,15 @@ namespace WebApiProject.Controllers
                 else if (type == "password")
                 {
                     subject = "הסיסמא שלך";
-                    body = mail.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\password.txt");
+                    body = MailService.ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\password.txt");
+                    body = body.Replace("{password}", user.Password);
                 }
-                mail.send(user.Email, body, subject, "saraor1412@gmail.com");
+                string str = MailService.send(user.Email, body, subject, "saraor1412@gmail.com");
+                if (str == "המייל נשלח בהצחלה")
+                {
+                    return Ok(str);
+                }
+                return BadRequest(str);
             }
         }
 
