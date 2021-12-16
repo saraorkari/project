@@ -11,7 +11,5 @@ namespace DTO
         public int Id { get; set; }
         public int CaterogyId { get; set; }
         public int ListId { get; set; }
-        
-        
     }
 }

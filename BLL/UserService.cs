@@ -89,7 +89,6 @@ namespace BLL
                     Mass = " סיסמא קיימת החלף סיסמא - תוכל להשתמש בסיסמא" + pass + " ";
                     return null;
                 }
-                Mass = "ההרשמה בוצעה בהצלחה!!!";
                 user user = db.users.Add(Convertion.UsersConvertion.Convert(u));
                 db.SaveChanges();
                 return Convertion.UsersConvertion.Convert(user);

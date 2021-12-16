@@ -18,7 +18,8 @@ namespace BLL.Convertion
             {
                 Id = shop.Id,
                 Name = shop.Name,
-                CityId = shop.CityId
+                CityId = shop.CityId,
+                Phone=shop.Phone
             };
         }
         public static ShopDTO Convert(shop shop)
@@ -29,7 +30,8 @@ namespace BLL.Convertion
             {
                 Id = shop.Id,
                 Name = shop.Name,
-                CityId = shop.CityId
+                CityId = shop.CityId,
+                Phone = shop.Phone
             };
         }
         public static List<shop> Convert(List<ShopDTO> shop)

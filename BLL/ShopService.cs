@@ -48,6 +48,7 @@ namespace BLL
                 {
                     ss.Name = s.Name;
                     ss.CityId = s.CityId;
+                    ss.Phone = s.Phone;
                     db.SaveChanges();
                     return Convertion.ShopConvertion.Convert(ss);
                 }
