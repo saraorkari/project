@@ -38,12 +38,15 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                history history = db.histories.FirstOrDefault(x => x.UserId == h.UserId && x.ProductName == h.ProductName);
-                if (history == null)
+                if (h.UserId != null)
                 {
-                    history = db.histories.Add(Convertion.HistoryConvertion.Convert(h));
-                    db.SaveChanges();
-                };
+                    history history = db.histories.FirstOrDefault(x => x.UserId == h.UserId && x.ProductName == h.ProductName);
+                    if (history == null)
+                    {
+                        history = db.histories.Add(Convertion.HistoryConvertion.Convert(h));
+                        db.SaveChanges();
+                    };
+                }
                 List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(h.ProductName)).ToList();
                 //if (h.SendMail)
                 //{

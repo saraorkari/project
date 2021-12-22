@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DTO;
+
 namespace BLL
 {
     public class ListService
@@ -28,13 +29,19 @@ namespace BLL
         }
 
         // POST: api/Areas
-        public ListDTO Post(ListDTO l)
+        public ListDTO Post(EventDTO l)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                list list = db.lists.Add(Convertion.ListsConvertion.Convert(l));
+
+                list ff = new list()
+                {
+                    Name = l.Name,
+                    listDetails = l.Categories.Select(x => new listDetail() { CategoryId = x }).ToList()
+                };
+                ff = db.lists.Add(ff);
                 db.SaveChanges();
-                return Convertion.ListsConvertion.Convert(list);
+                return Convertion.ListsConvertion.Convert(ff);
             }
         }
         public void Post(string name)

@@ -30,14 +30,13 @@ namespace WebApiProject.Controllers
 
         // POST: api/Areas
         [HttpPost]
-        public IHttpActionResult Post(ListDTO x)
+        public IHttpActionResult Post(EventDTO x)
         {
             if (x == null)
             {
                 return BadRequest("לא נשלח מידע");
             }
-            if (x.Id == 0)
-                return NotFound();
+            
             return Ok(ListService.Post(x));
         }
 

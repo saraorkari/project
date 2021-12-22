@@ -43,8 +43,7 @@ namespace WebApiProject.Controllers
             {
                 return BadRequest("לא נשלח מידע");
             }
-            if (x.Id == 0)
-                return NotFound();
+            
             return Ok(HistoryService.Post(x));
         }
 

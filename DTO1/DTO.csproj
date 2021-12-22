@@ -43,6 +43,7 @@
     <Compile Include="AreaDTO.cs" />
     <Compile Include="CategoryDTO.cs" />
     <Compile Include="CityDTO.cs" />
+    <Compile Include="EventDTO.cs" />
     <Compile Include="ProductShop.cs" />
     <Compile Include="HistoryDTO.cs" />
     <Compile Include="ListDetailsDTO.cs" />

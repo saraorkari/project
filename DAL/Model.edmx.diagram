@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a806579742ad41e5830f396e7ca4e96f" Name="Diagram1">
-        <EntityTypeShape EntityType="dbprojectModel.area" Width="1.5" PointX="6.125" PointY="6.25" />
+      <Diagram DiagramId="a806579742ad41e5830f396e7ca4e96f" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="dbprojectModel.area" Width="1.5" PointX="6.75" PointY="6.25" />
         <EntityTypeShape EntityType="dbprojectModel.category" Width="1.5" PointX="0.5" PointY="1.125" />
         <EntityTypeShape EntityType="dbprojectModel.city" Width="1.5" PointX="6.75" PointY="3.625" />
-        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="0.75" PointY="6.5" />
-        <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="2.5" PointY="0.625" />
+        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="3.375" PointY="6.5" />
+        <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="3" PointY="0.625" />
         <AssociationConnector Association="dbprojectModel.FK_cities_areas" />
         <AssociationConnector Association="dbprojectModel.FK_product_category" />
-        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="4.25" PointY="0.875" />
+        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="5.25" PointY="0.875" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_product" />
-        <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.75" PointY="3.875" />
-        <EntityTypeShape EntityType="dbprojectModel.user" Width="1.5" PointX="2.875" PointY="3.5" />
+        <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.5" PointY="4" />
+        <EntityTypeShape EntityType="dbprojectModel.user" Width="1.5" PointX="2.875" PointY="3.75" />
         <AssociationConnector Association="dbprojectModel.FK_history_user" />
-        <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="3" PointY="6.625" />
+        <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="1.375" PointY="6.375" />
         <AssociationConnector Association="dbprojectModel.FK_listDetails_category" />
         <AssociationConnector Association="dbprojectModel.FK_listDetails_list" />
-        <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.875" PointY="3.625" />
+        <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.75" PointY="3.75" />
         <AssociationConnector Association="dbprojectModel.FK_shop_cities" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
       </Diagram>
