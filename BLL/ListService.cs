@@ -17,8 +17,7 @@ namespace BLL
                 return Convertion.ListsConvertion.Convert(db.lists.ToList());
             }
         }
-
-        // GET: api/Areas/5
+        // GET: api/Lists/5
         public ListDTO Get(int id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
@@ -27,21 +26,29 @@ namespace BLL
             }
             return null;
         }
-
-        // POST: api/Areas
+        // POST: api/Lists
         public ListDTO Post(EventDTO l)
         {
+            list list=null;
             using (dbprojectEntities db = new dbprojectEntities())
             {
-
-                list ff = new list()
+                if (db.lists.Any(x => x.Name == l.Name))
                 {
-                    Name = l.Name,
-                    listDetails = l.Categories.Select(x => new listDetail() { CategoryId = x }).ToList()
-                };
-                ff = db.lists.Add(ff);
+                    //איך לגשת לקטגוריות של אירוע קיים ולהוסיף עוד
+                    //l.Categories.ForEach(x => ((list)db.lists.Where(y => y.Name == l.Name)).listDetails.Add(new listDetail()));
+                    
+                }
+                else
+                {
+                    list = new list()
+                    {
+                        Name = l.Name,
+                        listDetails = l.Categories.Select(x => new listDetail() { CategoryId = x }).ToList()
+                    };
+                    list = db.lists.Add(list);
+                }
                 db.SaveChanges();
-                return Convertion.ListsConvertion.Convert(ff);
+                return Convertion.ListsConvertion.Convert(list);
             }
         }
         public void Post(string name)
@@ -58,7 +65,7 @@ namespace BLL
             }
         }
 
-        // PUT: api/Areas/5
+        // PUT: api/Lists/5
         public ListDTO Put(int id, ListDTO l)
         {
             using (dbprojectEntities db = new dbprojectEntities())
@@ -73,8 +80,7 @@ namespace BLL
                 return null;
             }
         }
-
-        // DELETE: api/Areas/5
+        // DELETE: api/Lists/5
         public void Delete(int id)
         {
             using (dbprojectEntities db = new dbprojectEntities())

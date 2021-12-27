@@ -36,8 +36,8 @@ namespace WebApiProject.Controllers
             {
                 return BadRequest("לא נשלח מידע");
             }
-            if (x.Id == 0)
-                return NotFound();
+            //if (x.Id == 0)
+            //    return NotFound();
             return Ok(ShopService.Post(x));
         }
 

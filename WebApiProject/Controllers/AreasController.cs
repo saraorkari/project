@@ -33,8 +33,8 @@ namespace WebApiProject.Controllers
             {
                 return BadRequest("לא נשלח מידע");
             }
-            if (a.Id == 0)
-                return NotFound();
+            //if (a.Id == 0)
+            //    return NotFound();
             return Ok( AreaService.Post(a));
         }
 

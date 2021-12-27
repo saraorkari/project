@@ -36,7 +36,6 @@ namespace WebApiProject.Controllers
             {
                 return BadRequest("לא נשלח מידע");
             }
-            
             return Ok(ListService.Post(x));
         }
 
