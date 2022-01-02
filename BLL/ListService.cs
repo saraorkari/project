@@ -1,10 +1,8 @@
-﻿using System;
+﻿using DAL;
+using DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
-using DTO;
 
 namespace BLL
 {
@@ -29,14 +27,15 @@ namespace BLL
         // POST: api/Lists
         public ListDTO Post(EventDTO l)
         {
-            list list=null;
+            list list = null;
             using (dbprojectEntities db = new dbprojectEntities())
             {
                 if (db.lists.Any(x => x.Name == l.Name))
                 {
                     //איך לגשת לקטגוריות של אירוע קיים ולהוסיף עוד
-                    //l.Categories.ForEach(x => ((list)db.lists.Where(y => y.Name == l.Name)).listDetails.Add(new listDetail()));
-                    
+                    //l.Categories.ForEach(x => (db.lists.Where(y => y.Name == l.Name)).listDetails.Add(new listDetail()));
+                    //list lis = db.lists.Select(y => y.Name == l.Name);
+                     db.lists.FirstOrDefault(y => y.Name == l.Name).listDetails = l.Categories.Select(x=> new listDetail() { CategoryId = x }).ToList();
                 }
                 else
                 {

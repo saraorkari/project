@@ -11,7 +11,6 @@ using System.Web.Http.Cors;
 namespace WebApiProject.Controllers
 {
     [EnableCors(methods: "*", origins: "*", headers: "*")]
-
     public class ShopController : ApiController
     {
         ShopService ShopService = new ShopService();
@@ -27,10 +26,11 @@ namespace WebApiProject.Controllers
         {
             return ShopService.Get(id);
         }
-
+       
         // POST: api/Areas
         [HttpPost]
-        public IHttpActionResult Post(ShopDTO x)
+        
+        public IHttpActionResult Post(string cityName, ShopDTO x)
         {
             if (x == null)
             {
@@ -38,7 +38,7 @@ namespace WebApiProject.Controllers
             }
             //if (x.Id == 0)
             //    return NotFound();
-            return Ok(ShopService.Post(x));
+            return Ok(ShopService.Post(x, cityName));
         }
 
         // PUT: api/Areas/5
