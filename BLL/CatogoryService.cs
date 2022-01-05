@@ -18,13 +18,20 @@ namespace BLL
         }
 
         // GET: api/Areas/5
-        public CategoryDTO Get(int id)
+        public List<CategoryDTO> Get(int shopId)
         {
+            List<CategoryDTO> categoryDTO = new List<CategoryDTO>();
+            List<productInShop> productInShop;
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                Convertion.CategoryConvertion.Convert(db.categories.FirstOrDefault(x => x.Id == id));
+                productInShop = db.productInShops.Where(x => x.ShopId == shopId).ToList();
+
+                for (int i = 0; i < productInShop.Count; i++)
+                {
+                    categoryDTO.Add(Convertion.CategoryConvertion.Convert(productInShop[i].product.category));
+                }
             }
-            return null;
+            return categoryDTO;
         }
 
         // POST: api/Areas

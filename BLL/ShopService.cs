@@ -28,12 +28,16 @@ namespace BLL
         }
 
         // POST: api/Areas
-        public ShopDTO Post(ShopDTO s, string cityName)
+        public ShopDTO Post(string cityName, ShopDTO s)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
                 s.CityId = db.cities.FirstOrDefault(x => x.Name == cityName).Id;
-                shop shop = db.shops.Add(Convertion.ShopConvertion.Convert(s));
+                shop shop = db.shops.First(x => x.Name == s.Name && x.CityId == s.CityId && x.Phone == s.Phone);
+                if (shop==null)
+                {
+                    shop = db.shops.Add(Convertion.ShopConvertion.Convert(s));
+                }
                 db.SaveChanges();
                 return Convertion.ShopConvertion.Convert(shop);
             }

@@ -23,9 +23,9 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public CategoryDTO Get(int id)
+        public List<CategoryDTO> Get(int shopId)
         {
-            return CatogoryService.Get(id);
+            return CatogoryService.Get(shopId);
         }
 
         // POST: api/Areas

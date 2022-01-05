@@ -38,7 +38,7 @@ namespace WebApiProject.Controllers
             }
             //if (x.Id == 0)
             //    return NotFound();
-            return Ok(ShopService.Post(x, cityName));
+            return Ok(ShopService.Post(cityName, x));
         }
 
         // PUT: api/Areas/5

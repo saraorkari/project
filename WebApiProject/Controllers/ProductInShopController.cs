@@ -23,14 +23,14 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public ProductInShopDTO Get(int id)
+        public List<ProductInShopDTO> Get(int shopId, int categoryId)
         {
-            return ProductInShopService.Get(id);
+            return ProductInShopService.Get(shopId,categoryId);
         }
 
         // POST: api/Areas
         [HttpPost]
-        public IHttpActionResult Post(ProductInShopDTO x)
+        public IHttpActionResult Post(ProductDTO x)
         {
             if (x == null)
             {

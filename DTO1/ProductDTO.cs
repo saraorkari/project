@@ -13,7 +13,7 @@ namespace DTO
         public Nullable<System.DateTime> ProdDate { get; set; }
         public int CategoryId { get; set; }
         public string Picture { get; set; }
-       
-       
+        public double Price { get; set; }
+        public int shopId { get; set; }
     }
 }
