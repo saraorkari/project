@@ -13,6 +13,9 @@ namespace DTO
         public string Email { get; set; }
         public string Phon { get; set; }
         public int AreaId { get; set; }
+        public bool? Active { get; set; }
+        public bool? IsUpdate { get; set; }
+
      
     }
 }

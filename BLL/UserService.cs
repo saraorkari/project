@@ -22,7 +22,12 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                return Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => (x.Id == userName || x.Email == userName) && x.Password == pass));
+                user user = db.users.FirstOrDefault(x => (x.Id == userName || x.Email == userName) && x.Password == pass);
+                if (user != null && user.Active == false)
+                {
+                    user.Active = true;
+                }
+                return Convertion.UsersConvertion.Convert(user);
             }
         }
 
@@ -89,6 +94,7 @@ namespace BLL
                     Mass = " סיסמא קיימת החלף סיסמא - תוכל להשתמש בסיסמא" + pass + " ";
                     return null;
                 }
+                u.Active = true;
                 user user = db.users.Add(Convertion.UsersConvertion.Convert(u));
                 db.SaveChanges();
                 return Convertion.UsersConvertion.Convert(user);
@@ -114,14 +120,16 @@ namespace BLL
         }
 
         // DELETE: api/Areas/5
-        public void Delete(string id)
+        public void Delete(UserDTO u)
         {
-            using (dbprojectEntities db = new dbprojectEntities())
-            {
-                user u = db.users.FirstOrDefault(x => x.Id == id);
-                db.users.Remove(u);
-                db.SaveChanges();
-            }
+            //using (dbprojectEntities db = new dbprojectEntities())
+            //{
+            //    user u = db.users.FirstOrDefault(x => x.Id == id);
+            //    db.users.Remove(u);
+            //    db.SaveChanges();
+            //}
+            u.Active = false;
+
         }
     }
 }

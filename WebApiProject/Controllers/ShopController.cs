@@ -30,7 +30,7 @@ namespace WebApiProject.Controllers
         // POST: api/Areas
         [HttpPost]
         
-        public IHttpActionResult Post(string cityName, ShopDTO x)
+        public IHttpActionResult Post( ShopDTO x)
         {
             if (x == null)
             {
@@ -38,7 +38,7 @@ namespace WebApiProject.Controllers
             }
             //if (x.Id == 0)
             //    return NotFound();
-            return Ok(ShopService.Post(cityName, x));
+            return Ok(ShopService.Post( x));
         }
 
         // PUT: api/Areas/5

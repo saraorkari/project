@@ -17,6 +17,7 @@ namespace DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
+            this.askUpdates = new HashSet<askUpdate>();
             this.histories = new HashSet<history>();
         }
     
@@ -26,7 +27,11 @@ namespace DAL
         public string Email { get; set; }
         public string Phon { get; set; }
         public int AddressId { get; set; }
+        public Nullable<bool> Active { get; set; }
+        public Nullable<bool> IsUpdate { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<askUpdate> askUpdates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<history> histories { get; set; }
     }

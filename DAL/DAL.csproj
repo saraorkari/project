@@ -52,6 +52,9 @@
     <Compile Include="area.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="askUpdate.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

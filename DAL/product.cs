@@ -18,6 +18,7 @@ namespace DAL
         public product()
         {
             this.productInShops = new HashSet<productInShop>();
+            this.askUpdates = new HashSet<askUpdate>();
         }
     
         public int Id { get; set; }
@@ -30,5 +31,7 @@ namespace DAL
         public virtual category category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<productInShop> productInShops { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<askUpdate> askUpdates { get; set; }
     }
 }

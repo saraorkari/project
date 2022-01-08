@@ -12,6 +12,14 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="askUpdate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="category">
           <Key>
             <PropertyRef Name="Id" />
@@ -89,7 +97,33 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Phon" Type="nvarchar" MaxLength="10" />
           <Property Name="AddressId" Type="int" Nullable="false" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="IsUpdate" Type="bit" />
         </EntityType>
+        <Association Name="FK_askUpdate_askUpdate">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="askUpdate" Type="Self.askUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="askUpdate">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_askUpdate_product">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="askUpdate" Type="Self.askUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="askUpdate">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_cities_areas">
           <End Role="areas" Type="Self.areas" Multiplicity="0..1" />
           <End Role="cities" Type="Self.cities" Multiplicity="*" />
@@ -188,6 +222,7 @@
         </Association>
         <EntityContainer Name="dbprojectModelStoreContainer">
           <EntitySet Name="areas" EntityType="Self.areas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="askUpdate" EntityType="Self.askUpdate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="history" EntityType="Self.history" Schema="dbo" store:Type="Tables" />
@@ -197,6 +232,14 @@
           <EntitySet Name="productInShop" EntityType="Self.productInShop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="shop" EntityType="Self.shop" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_askUpdate_askUpdate" Association="Self.FK_askUpdate_askUpdate">
+            <End Role="user" EntitySet="user" />
+            <End Role="askUpdate" EntitySet="askUpdate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_askUpdate_product" Association="Self.FK_askUpdate_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="askUpdate" EntitySet="askUpdate" />
+          </AssociationSet>
           <AssociationSet Name="FK_cities_areas" Association="Self.FK_cities_areas">
             <End Role="areas" EntitySet="areas" />
             <End Role="cities" EntitySet="cities" />
@@ -254,11 +297,6 @@
             <End Role="productInShop" EntitySet="productInShops" />
           </AssociationSet>
           <EntitySet Name="histories" EntityType="dbprojectModel.history" />
-          <EntitySet Name="users" EntityType="dbprojectModel.user" />
-          <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
-            <End Role="user" EntitySet="users" />
-            <End Role="history" EntitySet="histories" />
-          </AssociationSet>
           <EntitySet Name="listDetails" EntityType="dbprojectModel.listDetail" />
           <AssociationSet Name="FK_listDetails_category" Association="dbprojectModel.FK_listDetails_category">
             <End Role="category" EntitySet="categories" />
@@ -276,6 +314,20 @@
           <AssociationSet Name="FK_productInShop_shop" Association="dbprojectModel.FK_productInShop_shop">
             <End Role="shop" EntitySet="shops" />
             <End Role="productInShop" EntitySet="productInShops" />
+          </AssociationSet>
+          <EntitySet Name="askUpdates" EntityType="dbprojectModel.askUpdate" />
+          <EntitySet Name="users" EntityType="dbprojectModel.user" />
+          <AssociationSet Name="FK_askUpdate_askUpdate" Association="dbprojectModel.FK_askUpdate_askUpdate">
+            <End Role="user" EntitySet="users" />
+            <End Role="askUpdate" EntitySet="askUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_askUpdate_product" Association="dbprojectModel.FK_askUpdate_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="askUpdate" EntitySet="askUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="history" EntitySet="histories" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="area">
@@ -325,6 +377,7 @@
           <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="category" Relationship="dbprojectModel.FK_product_category" FromRole="product" ToRole="category" />
           <NavigationProperty Name="productInShops" Relationship="dbprojectModel.FK_productInShop_product" FromRole="product" ToRole="productInShop" />
+          <NavigationProperty Name="askUpdates" Relationship="dbprojectModel.FK_askUpdate_product" FromRole="product" ToRole="askUpdate" />
         </EntityType>
         <Association Name="FK_cities_areas">
           <End Type="dbprojectModel.area" Role="area" Multiplicity="0..1" />
@@ -382,30 +435,6 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="user" Relationship="dbprojectModel.FK_history_user" FromRole="history" ToRole="user" />
         </EntityType>
-        <EntityType Name="user">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Phon" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="AddressId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="histories" Relationship="dbprojectModel.FK_history_user" FromRole="user" ToRole="history" />
-        </EntityType>
-        <Association Name="FK_history_user">
-          <End Type="dbprojectModel.user" Role="user" Multiplicity="1" />
-          <End Type="dbprojectModel.history" Role="history" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="history">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="listDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -472,6 +501,67 @@
             </Principal>
             <Dependent Role="productInShop">
               <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="askUpdate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="dbprojectModel.FK_askUpdate_askUpdate" FromRole="askUpdate" ToRole="user" />
+          <NavigationProperty Name="product" Relationship="dbprojectModel.FK_askUpdate_product" FromRole="askUpdate" ToRole="product" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phon" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="AddressId" Type="Int32" Nullable="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="IsUpdate" Type="Boolean" />
+          <NavigationProperty Name="askUpdates" Relationship="dbprojectModel.FK_askUpdate_askUpdate" FromRole="user" ToRole="askUpdate" />
+          <NavigationProperty Name="histories" Relationship="dbprojectModel.FK_history_user" FromRole="user" ToRole="history" />
+        </EntityType>
+        <Association Name="FK_askUpdate_askUpdate">
+          <End Type="dbprojectModel.user" Role="user" Multiplicity="1" />
+          <End Type="dbprojectModel.askUpdate" Role="askUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="askUpdate">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_askUpdate_product">
+          <End Type="dbprojectModel.product" Role="product" Multiplicity="1" />
+          <End Type="dbprojectModel.askUpdate" Role="askUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="askUpdate">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_history_user">
+          <End Type="dbprojectModel.user" Role="user" Multiplicity="1" />
+          <End Type="dbprojectModel.history" Role="history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="history">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -545,18 +635,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="dbprojectModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
-                <ScalarProperty Name="Phon" ColumnName="Phon" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="listDetails">
             <EntityTypeMapping TypeName="dbprojectModel.listDetail">
               <MappingFragment StoreEntitySet="listDetails">
@@ -571,6 +649,29 @@
               <MappingFragment StoreEntitySet="shop">
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="askUpdates">
+            <EntityTypeMapping TypeName="dbprojectModel.askUpdate">
+              <MappingFragment StoreEntitySet="askUpdate">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="dbprojectModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="IsUpdate" ColumnName="IsUpdate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+                <ScalarProperty Name="Phon" ColumnName="Phon" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

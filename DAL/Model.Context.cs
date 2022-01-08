@@ -32,8 +32,9 @@ namespace DAL
         public virtual DbSet<product> products { get; set; }
         public virtual DbSet<productInShop> productInShops { get; set; }
         public virtual DbSet<history> histories { get; set; }
-        public virtual DbSet<user> users { get; set; }
         public virtual DbSet<listDetail> listDetails { get; set; }
         public virtual DbSet<shop> shops { get; set; }
+        public virtual DbSet<askUpdate> askUpdates { get; set; }
+        public virtual DbSet<user> users { get; set; }
     }
 }

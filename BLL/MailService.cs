@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAL;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,51 @@ namespace BLL
 {
     public class MailService
     {
+
+        public bool SendMail(string type, string mailOrId, string productName)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                user user = db.users.FirstOrDefault(x => x.Id == mailOrId || x.Email == mailOrId);
+                if (user == null)
+                {
+                    return false;
+                }
+                string body = "", subject = "";
+                switch (type)
+                {
+                    case "update":
+                        {
+                            List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(productName)).ToList();
+                            subject = "עדכון על ירידת מחיר";
+                            body = ReadFile(@"./html/update.html");
+                            body = body.Replace("{productName}", productName);
+                            string shopDetails = "", productDetails = "";
+                            g.ForEach(x => { shopDetails += " שם: " + x.shop.Name + " מספר טלפון: " + x.shop.Phone + " איזור: " + x.shop.city.area.Name + " עיר: " + x.shop.city.Name; });
+                            g.ForEach(x => { productDetails += " שם: " + x.product.Name + " תיאור: " + x.product.Description + " מחיר: " + x.Price + " תאריך ייצור: " + x.product.ProdDate + " תמונה: " + x.product.Picture; });
+                            body = body.Replace("{shopDetails}", shopDetails);
+                            body = body.Replace("{productDetails}", productDetails);
+                            break;
+                        }
+                    case "askUpdate":
+                        {
+                            user.IsUpdate = true;
+                            db.askUpdates.Add(new askUpdate() { UserId = user.Id, ProductId = db.products.FirstOrDefault(x => x.Name == productName).Id });
+                            subject = "בקשתך לעדכון ירידת המחיר התקבלה";
+                            body = ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\ask.txt");
+                            body = body.Replace("{serchName}", productName); break;
+                        }
+                    case "password":
+                        {
+                            subject = "הסיסמא שלך";
+                            body = ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\password.txt");
+                            body = body.Replace("{password}", user.Password); break;
+                        }
+                }
+                return send(user.Email, body, subject, "saraor1412@gmail.com");
+            }
+        }
+
         public string ReadFile(string path)
         {
             string fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), path);
@@ -21,7 +67,7 @@ namespace BLL
                 return reader.ReadToEnd();
             }
         }
-        public string send(string toMail, string body, string subject, string returnMail)
+        public bool send(string toMail, string body, string subject, string returnMail)
         {
             MailMessage mail = new MailMessage();
             //למי לשלוח (יש אפשרות להוסיף כמה נמענים) 
@@ -57,9 +103,9 @@ namespace BLL
             }
             catch (Exception ex)
             {
-                return ex.ToString();
+                return false;
             }
-            return "המייל נשלח בהצחלה";
+            return true;
         }
     }
 }

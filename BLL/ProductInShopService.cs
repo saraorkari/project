@@ -13,6 +13,7 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
+
                 return Convertion.ProductInShopConvertion.Convert(db.productInShops.ToList());
             }
         }
@@ -31,28 +32,39 @@ namespace BLL
         // POST: api/Areas
         public ProductInShopDTO Post(ProductDTO p)
         {
-            productInShop productInShop = new productInShop();
-            productInShop.product = new product();
+            productInShop productInShop;
+            MailService mailService = new MailService();
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                if (db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId) != null)
+                productInShop = db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId);
+                if (productInShop != null)
                 {
-                    //איך אפשר לקצר?
-                    db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId).Price = p.Price;
-                    db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId).product.ProdDate = p.ProdDate;
-                    db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId).product.Name = p.Name;
-                    db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId).product.Picture = p.Picture;
-                    db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId).product.Description = p.Description;
+                    if (productInShop.Price > p.Price)
+                    {
+                        db.askUpdates.Select(x => x.user.Active==true && mailService.SendMail("update", x.UserId, x.product.Name));
+                    }
+                    productInShop.Price = p.Price;
+                    productInShop.product.ProdDate = p.ProdDate;
+                    productInShop.product.Name = p.Name;
+                    productInShop.product.Picture = p.Picture;
+                    productInShop.product.Description = p.Description;
                 }
-                productInShop.Price = p.Price;
-                productInShop.product.ProdDate = p.ProdDate;
-                productInShop.product.Name = p.Name;
-                productInShop.product.Picture = p.Picture;
-                productInShop.product.Description = p.Description;
-                productInShop.product.Id = p.Id;
-                productInShop.Productld = p.Id;
-                productInShop.ShopId = p.shopId;
-                db.productInShops.Add(productInShop);
+                else
+                {
+                    productInShop = new productInShop()
+                    {
+                        Price = p.Price,
+                        ShopId = p.shopId,
+                        product = new product()
+                        {
+                            ProdDate = p.ProdDate,
+                            Name = p.Name,
+                            Picture = p.Picture,
+                            Description = p.Description,
+                        },
+                    };
+                    db.productInShops.Add(productInShop);
+                }
                 db.SaveChanges();
                 return Convertion.ProductInShopConvertion.Convert(productInShop);
             }

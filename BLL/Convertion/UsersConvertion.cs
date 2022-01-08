@@ -21,7 +21,9 @@ namespace BLL.Convertion
                 Password = user.Password,
                 Phon = user.Phon,
                 Email = user.Email,
-                AddressId = user.AreaId
+                AddressId = user.AreaId,
+                Active= user.Active,
+                IsUpdate=user.IsUpdate
             };
         }
         public static UserDTO Convert(user user)
@@ -35,7 +37,9 @@ namespace BLL.Convertion
                 Password = user.Password,
                 Phon = user.Phon,
                 Email = user.Email,
-                AreaId = user.AddressId
+                AreaId = user.AddressId,
+                Active = user.Active,
+                IsUpdate = user.IsUpdate
             };
         }
         public static List<user> Convert(List<UserDTO> user)
