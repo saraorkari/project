@@ -8,7 +8,6 @@
         <EntityTypeShape EntityType="dbprojectModel.area" Width="1.5" PointX="6.75" PointY="6.25" />
         <EntityTypeShape EntityType="dbprojectModel.category" Width="1.5" PointX="0.5" PointY="1.125" />
         <EntityTypeShape EntityType="dbprojectModel.city" Width="1.5" PointX="6.75" PointY="3.625" />
-        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="2.5" PointY="6.625" />
         <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="3" PointY="0.625" />
         <AssociationConnector Association="dbprojectModel.FK_cities_areas" />
         <AssociationConnector Association="dbprojectModel.FK_product_category" />
@@ -17,7 +16,6 @@
         <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.5" PointY="4" />
         <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="4.5" PointY="6.5" />
         <AssociationConnector Association="dbprojectModel.FK_listDetails_category" />
-        <AssociationConnector Association="dbprojectModel.FK_listDetails_list" />
         <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.75" PointY="3.75" />
         <AssociationConnector Association="dbprojectModel.FK_shop_cities" />
         <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
@@ -26,6 +24,9 @@
         <AssociationConnector Association="dbprojectModel.FK_askUpdate_askUpdate" />
         <AssociationConnector Association="dbprojectModel.FK_askUpdate_product" />
         <AssociationConnector Association="dbprojectModel.FK_history_user" />
+        <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="2.5" PointY="6.75" />
+        <AssociationConnector Association="dbprojectModel.FK_listDetails_list" ManuallyRouted="false" >
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

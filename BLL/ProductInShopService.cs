@@ -41,7 +41,7 @@ namespace BLL
                 {
                     if (productInShop.Price > p.Price)
                     {
-                        db.askUpdates.Select(x => x.user.Active==true && mailService.SendMail("update", x.UserId, x.product.Name));
+                        db.askUpdates.Select(x => x.user.Active == true && x.user.IsUpdate == true && mailService.SendMail("update", x.UserId, x.product.Name));
                     }
                     productInShop.Price = p.Price;
                     productInShop.product.ProdDate = p.ProdDate;

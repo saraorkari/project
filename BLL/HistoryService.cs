@@ -59,6 +59,7 @@ namespace BLL
 
                 //    mail.send(history.user.Email, body, "subject", "רשימת המוצרים המתאימים לחיפוש שבחרתם");
                 //}
+                
                 return Convertion.ProductInShopConvertion.Convert(g);
             }
         }

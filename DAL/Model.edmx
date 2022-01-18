@@ -57,6 +57,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Picture" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -281,7 +282,6 @@
           <EntitySet Name="areas" EntityType="dbprojectModel.area" />
           <EntitySet Name="categories" EntityType="dbprojectModel.category" />
           <EntitySet Name="cities" EntityType="dbprojectModel.city" />
-          <EntitySet Name="lists" EntityType="dbprojectModel.list" />
           <EntitySet Name="products" EntityType="dbprojectModel.product" />
           <AssociationSet Name="FK_cities_areas" Association="dbprojectModel.FK_cities_areas">
             <End Role="area" EntitySet="areas" />
@@ -300,10 +300,6 @@
           <EntitySet Name="listDetails" EntityType="dbprojectModel.listDetail" />
           <AssociationSet Name="FK_listDetails_category" Association="dbprojectModel.FK_listDetails_category">
             <End Role="category" EntitySet="categories" />
-            <End Role="listDetail" EntitySet="listDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_listDetails_list" Association="dbprojectModel.FK_listDetails_list">
-            <End Role="list" EntitySet="lists" />
             <End Role="listDetail" EntitySet="listDetails" />
           </AssociationSet>
           <EntitySet Name="shops" EntityType="dbprojectModel.shop" />
@@ -328,6 +324,11 @@
           <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
             <End Role="user" EntitySet="users" />
             <End Role="history" EntitySet="histories" />
+          </AssociationSet>
+          <EntitySet Name="lists" EntityType="dbprojectModel.list" />
+          <AssociationSet Name="FK_listDetails_list" Association="dbprojectModel.FK_listDetails_list">
+            <End Role="list" EntitySet="lists" />
+            <End Role="listDetail" EntitySet="listDetails" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="area">
@@ -356,14 +357,6 @@
           <Property Name="AreaId" Type="Int32" />
           <NavigationProperty Name="area" Relationship="dbprojectModel.FK_cities_areas" FromRole="city" ToRole="area" />
           <NavigationProperty Name="shops" Relationship="dbprojectModel.FK_shop_cities" FromRole="city" ToRole="shop" />
-        </EntityType>
-        <EntityType Name="list">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="listDetails" Relationship="dbprojectModel.FK_listDetails_list" FromRole="list" ToRole="listDetail" />
         </EntityType>
         <EntityType Name="product">
           <Key>
@@ -454,18 +447,6 @@
             </Principal>
             <Dependent Role="listDetail">
               <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_listDetails_list">
-          <End Type="dbprojectModel.list" Role="list" Multiplicity="1" />
-          <End Type="dbprojectModel.listDetail" Role="listDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="list">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="listDetail">
-              <PropertyRef Name="ListId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -565,6 +546,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="list">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="listDetails" Relationship="dbprojectModel.FK_listDetails_list" FromRole="list" ToRole="listDetail" />
+        </EntityType>
+        <Association Name="FK_listDetails_list">
+          <End Type="dbprojectModel.list" Role="list" Multiplicity="1" />
+          <End Type="dbprojectModel.listDetail" Role="listDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="list">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="listDetail">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -591,14 +593,6 @@
             <EntityTypeMapping TypeName="dbprojectModel.city">
               <MappingFragment StoreEntitySet="cities">
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="lists">
-            <EntityTypeMapping TypeName="dbprojectModel.list">
-              <MappingFragment StoreEntitySet="lists">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -672,6 +666,15 @@
                 <ScalarProperty Name="Phon" ColumnName="Phon" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lists">
+            <EntityTypeMapping TypeName="dbprojectModel.list">
+              <MappingFragment StoreEntitySet="lists">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

@@ -17,7 +17,8 @@ namespace BLL.Convertion
             return new list()
             {
                 Id = list.Id,
-                Name = list.Name
+                Name = list.Name,
+                Picture=list.Picture
             };
         }
         public static ListDTO Convert(list list)
@@ -27,7 +28,8 @@ namespace BLL.Convertion
             return new ListDTO()
             {
                 Id = list.Id,
-                Name = list.Name
+                Name = list.Name,
+                Picture=list.Picture
             };
         }
         public static List<list> Convert(List<ListDTO> list)

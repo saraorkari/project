@@ -59,6 +59,10 @@ namespace WebApiProject.Controllers
         }
 
         // DELETE: api/Areas/5
+        public void Delete(string id)
+        {
+            UserService.Delete(id);
+        }  
         public void Delete(UserDTO u)
         {
             UserService.Delete(u);

@@ -120,16 +120,17 @@ namespace BLL
         }
 
         // DELETE: api/Areas/5
+        public void Delete(string id)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {            
+                UserDTO user = Convertion.UsersConvertion.Convert(db.users.FirstOrDefault(x => x.Id == id));
+                user.Active = false; 
+            }
+        }
         public void Delete(UserDTO u)
         {
-            //using (dbprojectEntities db = new dbprojectEntities())
-            //{
-            //    user u = db.users.FirstOrDefault(x => x.Id == id);
-            //    db.users.Remove(u);
-            //    db.SaveChanges();
-            //}
             u.Active = false;
-
         }
     }
 }

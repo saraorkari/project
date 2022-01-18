@@ -28,13 +28,13 @@ namespace BLL
         }
 
         // POST: api/Areas
-        public ShopDTO Post( ShopDTO s)
+        public ShopDTO Post(ShopDTO s)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                s.CityId = db.cities.FirstOrDefault(x => x.Name == s.CityName).Id;
-                shop shop = db.shops.First(x => x.Name == s.Name && x.CityId == s.CityId && x.Phone == s.Phone);
-                if (shop==null)
+                s.CityId = db.cities.FirstOrDefault(x => x.Name == s.CityName)?.Id;
+                shop shop = db.shops.FirstOrDefault(x => x.Name == s.Name && x.CityId == s.CityId && x.Phone == s.Phone);
+                if (shop == null)
                 {
                     shop = db.shops.Add(Convertion.ShopConvertion.Convert(s));
                 }
@@ -48,15 +48,15 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                shop ss = db.shops.FirstOrDefault(x => x.Id == id);
-                if (ss != null)
-                {
-                    ss.Name = s.Name;
-                    ss.CityId = s.CityId;
-                    ss.Phone = s.Phone;
-                    db.SaveChanges();
-                    return Convertion.ShopConvertion.Convert(ss);
-                }
+                //shop ss = db.shops.FirstOrDefault(x => x.Id == id);
+                //if (ss != null)
+                //{
+                //    ss.Name = s.Name;
+                //    ss.CityId = s.CityId;
+                //    ss.Phone = s.Phone;
+                //    db.SaveChanges();
+                //    return Convertion.ShopConvertion.Convert(ss);
+                //}
                 return null;
             }
         }
