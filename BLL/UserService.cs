@@ -74,6 +74,8 @@ namespace BLL
             return builder.ToString();
         }
         // POST: api/Areas
+
+
         public UserDTO Post(UserDTO u, ref string Mass)
         {
             using (dbprojectEntities db = new dbprojectEntities())

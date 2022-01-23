@@ -32,10 +32,7 @@ namespace BLL
             {
                 if (db.lists.Any(x => x.Name == l.Name))
                 {
-                    //איך לגשת לקטגוריות של אירוע קיים ולהוסיף עוד
-                    //l.Categories.ForEach(x => (db.lists.Where(y => y.Name == l.Name)).listDetails.Add(new listDetail()));
-                    //list lis = db.lists.Select(y => y.Name == l.Name);
-                     db.lists.FirstOrDefault(y => y.Name == l.Name).listDetails = l.Categories.Select(x=> new listDetail() { CategoryId = x }).ToList();
+                      db.lists.FirstOrDefault(y => y.Name == l.Name).listDetails = l.Categories.Select(x=> new listDetail() { CategoryId = x }).ToList();
                 }
                 else
                 {
