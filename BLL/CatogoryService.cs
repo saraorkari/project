@@ -21,14 +21,19 @@ namespace BLL
         public List<CategoryDTO> Get(int shopId)
         {
             List<CategoryDTO> categoryDTO = new List<CategoryDTO>();
+            CategoryDTO category = new CategoryDTO();
             List<productInShop> productInShop;
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                productInShop = db.productInShops.Where(x => x.ShopId == shopId).ToList();
-
+                if (shopId == -1) return Convertion.CategoryConvertion.Convert(db.categories.ToList());
+                productInShop =  db.productInShops.Where(x => x.ShopId == shopId).ToList();
                 for (int i = 0; i < productInShop.Count; i++)
                 {
-                    categoryDTO.Add(Convertion.CategoryConvertion.Convert(productInShop[i].product.category));
+                    category = Convertion.CategoryConvertion.Convert(productInShop[i].product.category);
+                    if (categoryDTO.Contains(category)==false)
+                    {
+                        categoryDTO.Add(Convertion.CategoryConvertion.Convert(productInShop[i].product.category));
+                    }
                 }
             }
             return categoryDTO;

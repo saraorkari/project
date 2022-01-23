@@ -17,9 +17,11 @@ namespace WebApiProject.Controllers
     {
         // GET api/mail
         MailService mailService = new MailService();
-        public bool Get(string type, string mailOrId, string productName)
+        public string Get(string type, string mailOrId, string productName)
         {
-            return mailService.SendMail(type, mailOrId, productName);
+            string errMsg;
+            mailService.SendMail(type, mailOrId, productName, out errMsg);
+            return errMsg;
         }
 
         // GET api/mail/5

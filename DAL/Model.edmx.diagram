@@ -8,25 +8,25 @@
         <EntityTypeShape EntityType="dbprojectModel.area" Width="1.5" PointX="6.75" PointY="6.25" />
         <EntityTypeShape EntityType="dbprojectModel.category" Width="1.5" PointX="0.5" PointY="1.125" />
         <EntityTypeShape EntityType="dbprojectModel.city" Width="1.5" PointX="6.75" PointY="3.625" />
-        <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="3" PointY="0.625" />
         <AssociationConnector Association="dbprojectModel.FK_cities_areas" />
-        <AssociationConnector Association="dbprojectModel.FK_product_category" />
-        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="5.25" PointY="0.875" />
-        <AssociationConnector Association="dbprojectModel.FK_productInShop_product" />
         <EntityTypeShape EntityType="dbprojectModel.history" Width="1.5" PointX="0.5" PointY="4" />
         <EntityTypeShape EntityType="dbprojectModel.listDetail" Width="1.5" PointX="4.5" PointY="6.5" />
         <AssociationConnector Association="dbprojectModel.FK_listDetails_category" />
         <EntityTypeShape EntityType="dbprojectModel.shop" Width="1.5" PointX="4.75" PointY="3.75" />
         <AssociationConnector Association="dbprojectModel.FK_shop_cities" />
-        <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
         <EntityTypeShape EntityType="dbprojectModel.askUpdate" Width="1.5" PointX="2.5" PointY="3.875" />
         <EntityTypeShape EntityType="dbprojectModel.user" Width="1.5" PointX="0.5" PointY="6.125" />
         <AssociationConnector Association="dbprojectModel.FK_askUpdate_askUpdate" />
-        <AssociationConnector Association="dbprojectModel.FK_askUpdate_product" />
         <AssociationConnector Association="dbprojectModel.FK_history_user" />
         <EntityTypeShape EntityType="dbprojectModel.list" Width="1.5" PointX="2.5" PointY="6.75" />
         <AssociationConnector Association="dbprojectModel.FK_listDetails_list" ManuallyRouted="false" >
         </AssociationConnector>
+        <EntityTypeShape EntityType="dbprojectModel.product" Width="1.5" PointX="3.125" PointY="0.625" />
+        <AssociationConnector Association="dbprojectModel.FK_askUpdate_product" />
+        <AssociationConnector Association="dbprojectModel.FK_product_category" />
+        <EntityTypeShape EntityType="dbprojectModel.productInShop" Width="1.5" PointX="5.625" PointY="0.625" />
+        <AssociationConnector Association="dbprojectModel.FK_productInShop_product" />
+        <AssociationConnector Association="dbprojectModel.FK_productInShop_shop" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

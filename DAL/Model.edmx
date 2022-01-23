@@ -66,7 +66,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" />
-          <Property Name="ProdDate" Type="date" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="Picture" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -78,6 +77,7 @@
           <Property Name="Productld" Type="int" Nullable="false" />
           <Property Name="ShopId" Type="int" Nullable="false" />
           <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="ProdDate" Type="date" />
         </EntityType>
         <EntityType Name="shop">
           <Key>
@@ -282,19 +282,9 @@
           <EntitySet Name="areas" EntityType="dbprojectModel.area" />
           <EntitySet Name="categories" EntityType="dbprojectModel.category" />
           <EntitySet Name="cities" EntityType="dbprojectModel.city" />
-          <EntitySet Name="products" EntityType="dbprojectModel.product" />
           <AssociationSet Name="FK_cities_areas" Association="dbprojectModel.FK_cities_areas">
             <End Role="area" EntitySet="areas" />
             <End Role="city" EntitySet="cities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_product_category" Association="dbprojectModel.FK_product_category">
-            <End Role="category" EntitySet="categories" />
-            <End Role="product" EntitySet="products" />
-          </AssociationSet>
-          <EntitySet Name="productInShops" EntityType="dbprojectModel.productInShop" />
-          <AssociationSet Name="FK_productInShop_product" Association="dbprojectModel.FK_productInShop_product">
-            <End Role="product" EntitySet="products" />
-            <End Role="productInShop" EntitySet="productInShops" />
           </AssociationSet>
           <EntitySet Name="histories" EntityType="dbprojectModel.history" />
           <EntitySet Name="listDetails" EntityType="dbprojectModel.listDetail" />
@@ -307,18 +297,10 @@
             <End Role="city" EntitySet="cities" />
             <End Role="shop" EntitySet="shops" />
           </AssociationSet>
-          <AssociationSet Name="FK_productInShop_shop" Association="dbprojectModel.FK_productInShop_shop">
-            <End Role="shop" EntitySet="shops" />
-            <End Role="productInShop" EntitySet="productInShops" />
-          </AssociationSet>
           <EntitySet Name="askUpdates" EntityType="dbprojectModel.askUpdate" />
           <EntitySet Name="users" EntityType="dbprojectModel.user" />
           <AssociationSet Name="FK_askUpdate_askUpdate" Association="dbprojectModel.FK_askUpdate_askUpdate">
             <End Role="user" EntitySet="users" />
-            <End Role="askUpdate" EntitySet="askUpdates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_askUpdate_product" Association="dbprojectModel.FK_askUpdate_product">
-            <End Role="product" EntitySet="products" />
             <End Role="askUpdate" EntitySet="askUpdates" />
           </AssociationSet>
           <AssociationSet Name="FK_history_user" Association="dbprojectModel.FK_history_user">
@@ -329,6 +311,24 @@
           <AssociationSet Name="FK_listDetails_list" Association="dbprojectModel.FK_listDetails_list">
             <End Role="list" EntitySet="lists" />
             <End Role="listDetail" EntitySet="listDetails" />
+          </AssociationSet>
+          <EntitySet Name="products" EntityType="dbprojectModel.product" />
+          <AssociationSet Name="FK_askUpdate_product" Association="dbprojectModel.FK_askUpdate_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="askUpdate" EntitySet="askUpdates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_product_category" Association="dbprojectModel.FK_product_category">
+            <End Role="category" EntitySet="categories" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <EntitySet Name="productInShops" EntityType="dbprojectModel.productInShop" />
+          <AssociationSet Name="FK_productInShop_product" Association="dbprojectModel.FK_productInShop_product">
+            <End Role="product" EntitySet="products" />
+            <End Role="productInShop" EntitySet="productInShops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productInShop_shop" Association="dbprojectModel.FK_productInShop_shop">
+            <End Role="shop" EntitySet="shops" />
+            <End Role="productInShop" EntitySet="productInShops" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="area">
@@ -345,8 +345,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="products" Relationship="dbprojectModel.FK_product_category" FromRole="category" ToRole="product" />
           <NavigationProperty Name="listDetails" Relationship="dbprojectModel.FK_listDetails_category" FromRole="category" ToRole="listDetail" />
+          <NavigationProperty Name="products" Relationship="dbprojectModel.FK_product_category" FromRole="category" ToRole="product" />
         </EntityType>
         <EntityType Name="city">
           <Key>
@@ -358,20 +358,6 @@
           <NavigationProperty Name="area" Relationship="dbprojectModel.FK_cities_areas" FromRole="city" ToRole="area" />
           <NavigationProperty Name="shops" Relationship="dbprojectModel.FK_shop_cities" FromRole="city" ToRole="shop" />
         </EntityType>
-        <EntityType Name="product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProdDate" Type="DateTime" Precision="0" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="category" Relationship="dbprojectModel.FK_product_category" FromRole="product" ToRole="category" />
-          <NavigationProperty Name="productInShops" Relationship="dbprojectModel.FK_productInShop_product" FromRole="product" ToRole="productInShop" />
-          <NavigationProperty Name="askUpdates" Relationship="dbprojectModel.FK_askUpdate_product" FromRole="product" ToRole="askUpdate" />
-        </EntityType>
         <Association Name="FK_cities_areas">
           <End Type="dbprojectModel.area" Role="area" Multiplicity="0..1" />
           <End Type="dbprojectModel.city" Role="city" Multiplicity="*" />
@@ -381,41 +367,6 @@
             </Principal>
             <Dependent Role="city">
               <PropertyRef Name="AreaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_product_category">
-          <End Type="dbprojectModel.category" Role="category" Multiplicity="1" />
-          <End Type="dbprojectModel.product" Role="product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="category">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="product">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="productInShop">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Productld" Type="Int32" Nullable="false" />
-          <Property Name="ShopId" Type="Int32" Nullable="false" />
-          <Property Name="Price" Type="Double" Nullable="false" />
-          <NavigationProperty Name="product" Relationship="dbprojectModel.FK_productInShop_product" FromRole="productInShop" ToRole="product" />
-          <NavigationProperty Name="shop" Relationship="dbprojectModel.FK_productInShop_shop" FromRole="productInShop" ToRole="shop" />
-        </EntityType>
-        <Association Name="FK_productInShop_product">
-          <End Type="dbprojectModel.product" Role="product" Multiplicity="1" />
-          <End Type="dbprojectModel.productInShop" Role="productInShop" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="productInShop">
-              <PropertyRef Name="Productld" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -473,18 +424,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_productInShop_shop">
-          <End Type="dbprojectModel.shop" Role="shop" Multiplicity="1" />
-          <End Type="dbprojectModel.productInShop" Role="productInShop" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="shop">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="productInShop">
-              <PropertyRef Name="ShopId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="askUpdate">
           <Key>
             <PropertyRef Name="Id" />
@@ -522,18 +461,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_askUpdate_product">
-          <End Type="dbprojectModel.product" Role="product" Multiplicity="1" />
-          <End Type="dbprojectModel.askUpdate" Role="askUpdate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="askUpdate">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_history_user">
           <End Type="dbprojectModel.user" Role="user" Multiplicity="1" />
           <End Type="dbprojectModel.history" Role="history" Multiplicity="*" />
@@ -567,6 +494,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="Picture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="askUpdates" Relationship="dbprojectModel.FK_askUpdate_product" FromRole="product" ToRole="askUpdate" />
+          <NavigationProperty Name="category" Relationship="dbprojectModel.FK_product_category" FromRole="product" ToRole="category" />
+          <NavigationProperty Name="productInShops" Relationship="dbprojectModel.FK_productInShop_product" FromRole="product" ToRole="productInShop" />
+        </EntityType>
+        <Association Name="FK_askUpdate_product">
+          <End Type="dbprojectModel.product" Role="product" Multiplicity="1" />
+          <End Type="dbprojectModel.askUpdate" Role="askUpdate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="askUpdate">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_product_category">
+          <End Type="dbprojectModel.category" Role="category" Multiplicity="1" />
+          <End Type="dbprojectModel.product" Role="product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="productInShop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Productld" Type="Int32" Nullable="false" />
+          <Property Name="ShopId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="ProdDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="product" Relationship="dbprojectModel.FK_productInShop_product" FromRole="productInShop" ToRole="product" />
+          <NavigationProperty Name="shop" Relationship="dbprojectModel.FK_productInShop_shop" FromRole="productInShop" ToRole="shop" />
+        </EntityType>
+        <Association Name="FK_productInShop_product">
+          <End Type="dbprojectModel.product" Role="product" Multiplicity="1" />
+          <End Type="dbprojectModel.productInShop" Role="productInShop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="productInShop">
+              <PropertyRef Name="Productld" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productInShop_shop">
+          <End Type="dbprojectModel.shop" Role="shop" Multiplicity="1" />
+          <End Type="dbprojectModel.productInShop" Role="productInShop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="productInShop">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -594,28 +594,6 @@
               <MappingFragment StoreEntitySet="cities">
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="products">
-            <EntityTypeMapping TypeName="dbprojectModel.product">
-              <MappingFragment StoreEntitySet="product">
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ProdDate" ColumnName="ProdDate" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="productInShops">
-            <EntityTypeMapping TypeName="dbprojectModel.productInShop">
-              <MappingFragment StoreEntitySet="productInShop">
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
-                <ScalarProperty Name="Productld" ColumnName="Productld" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -676,6 +654,28 @@
               <MappingFragment StoreEntitySet="lists">
                 <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="dbprojectModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productInShops">
+            <EntityTypeMapping TypeName="dbprojectModel.productInShop">
+              <MappingFragment StoreEntitySet="productInShop">
+                <ScalarProperty Name="ProdDate" ColumnName="ProdDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="Productld" ColumnName="Productld" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

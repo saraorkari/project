@@ -18,6 +18,7 @@ namespace DAL
         public int Productld { get; set; }
         public int ShopId { get; set; }
         public double Price { get; set; }
+        public Nullable<System.DateTime> ProdDate { get; set; }
     
         public virtual product product { get; set; }
         public virtual shop shop { get; set; }

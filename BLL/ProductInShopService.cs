@@ -24,6 +24,7 @@ namespace BLL
             List<ProductInShopDTO> productInShop;
             using (dbprojectEntities db = new dbprojectEntities())
             {
+                if (shopId == -1) return Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.product.CategoryId == categoryId).ToList());
                 productInShop = Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.ShopId == shopId && x.product.CategoryId == categoryId).ToList());
             }
             return productInShop;
@@ -34,6 +35,7 @@ namespace BLL
         {
             productInShop productInShop;
             MailService mailService = new MailService();
+            string errMsg;
             using (dbprojectEntities db = new dbprojectEntities())
             {
                 productInShop = db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId);
@@ -41,11 +43,12 @@ namespace BLL
                 {
                     if (productInShop.Price > p.Price)
                     {
-                        db.askUpdates.Select(x => x.user.Active == true && x.user.IsUpdate == true && mailService.SendMail("update", x.UserId, x.product.Name));
+                        db.askUpdates.Where(x => x.user.Active == true && x.user.IsUpdate == true ? mailService.SendMail("update", x.UserId, x.product.Name, out errMsg):true);
                     }
                     productInShop.Price = p.Price;
-                    productInShop.product.ProdDate = p.ProdDate;
                     productInShop.product.Name = p.Name;
+                    productInShop.product.CategoryId = p.CategoryId;
+                    productInShop.ProdDate = p.ProdDate;
                     productInShop.product.Picture = p.Picture;
                     productInShop.product.Description = p.Description;
                 }
@@ -55,14 +58,14 @@ namespace BLL
                     {
                         Price = p.Price,
                         ShopId = p.shopId,
-                        product = new product()
-                        {
-                            ProdDate = p.ProdDate,
-                            Name = p.Name,
-                            Picture = p.Picture,
-                            Description = p.Description,
-                        },
+                        ProdDate = p.ProdDate,
+                        Productld = p.Id,
+                        product = db.products.FirstOrDefault(x => x.Id == p.Id)
                     };
+                    productInShop.product.CategoryId = p.CategoryId;
+                    productInShop.product.Name = p.Name;
+                    productInShop.product.Picture = p.Picture;
+                    productInShop.product.Description = p.Description;
                     db.productInShops.Add(productInShop);
                 }
                 db.SaveChanges();

@@ -9,7 +9,7 @@ namespace DTO
     {
      
        
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> AreaId { get; set; }
 

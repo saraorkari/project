@@ -20,7 +20,7 @@ namespace DAL
             this.shops = new HashSet<shop>();
         }
     
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> AreaId { get; set; }
     

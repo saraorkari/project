@@ -13,6 +13,6 @@ namespace DTO
         public string UserId { get; set; }
         public bool SendMail { get; set; }
 
-        
+
     }
 }

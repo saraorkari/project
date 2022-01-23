@@ -47,7 +47,7 @@ namespace BLL
                         db.SaveChanges();
                     };
                 }
-                List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(h.ProductName)).ToList();
+                List<ProductInShopDTO> g = Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.product.Name.Contains(h.ProductName)).ToList());
                 //if (h.SendMail)
                 //{
                 //    MailService mail = new MailService();
@@ -59,8 +59,8 @@ namespace BLL
 
                 //    mail.send(history.user.Email, body, "subject", "רשימת המוצרים המתאימים לחיפוש שבחרתם");
                 //}
-                
-                return Convertion.ProductInShopConvertion.Convert(g);
+                g.Sort();
+                return g;
             }
         }
 

@@ -57,7 +57,6 @@ namespace BLL
                     ps.Name = p.Name;
                     ps.Picture = p.Picture;
                     ps.Description = p.Description;
-                    ps.ProdDate = p.ProdDate;
                     ps.CategoryId = p.CategoryId;
                     db.SaveChanges();
                     return Convertion.ProductConvertion.Convert(ps);

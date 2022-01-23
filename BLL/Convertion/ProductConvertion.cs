@@ -19,7 +19,6 @@ namespace BLL.Convertion
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
-                ProdDate = product.ProdDate,
                 Picture = product.Picture,
                 CategoryId = product.CategoryId
             };
@@ -33,7 +32,6 @@ namespace BLL.Convertion
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
-                ProdDate = product.ProdDate,
                 Picture = product.Picture,
                 CategoryId = product.CategoryId
             };
