@@ -33,6 +33,7 @@ namespace BLL
             using (dbprojectEntities db = new dbprojectEntities())
             {
                 s.CityId = db.cities.FirstOrDefault(x => x.Name == s.CityName)?.Id;
+               
                 shop shop = db.shops.FirstOrDefault(x => x.Name == s.Name && x.CityId == s.CityId && x.Phone == s.Phone);
                 if (shop == null)
                 {

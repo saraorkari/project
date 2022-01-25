@@ -36,9 +36,27 @@ namespace BLL.Convertion
                 CategoryId = product.CategoryId
             };
         }
+        public static ProductWhithShop Convert1(product product)
+        {
+            if (product == null)
+                return null;
+            return new ProductWhithShop()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Picture = product.Picture,
+                CategoryId = product.CategoryId,
+                ProductInShops=ProductInShopConvertion.Convert(product.productInShops.ToList())
+            };
+        }
         public static List<product> Convert(List<ProductDTO> product)
         {
             return product.Select(x => Convert(x)).ToList();
+        }
+        public static List<ProductWhithShop> Convert1(List<product> product)
+        {
+            return product.Select(x => Convert1(x)).ToList();
         }
         public static List<ProductDTO> Convert(List<product> product)
         {

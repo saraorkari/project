@@ -5,7 +5,11 @@ using System.Web;
 
 namespace DTO
 {
-    public class ProductDTO
+    public class ProductWhithShop:ProductDTO
+    {
+        public List<ProductInShopDTO> ProductInShops { get; set; }
+    }
+        public class ProductDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

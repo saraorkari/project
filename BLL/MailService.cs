@@ -27,19 +27,6 @@ namespace BLL
                 string body = "", subject = "";
                 switch (type)
                 {
-                    case "update":
-                        {
-                            List<productInShop> g = db.productInShops.Where(x => x.product.Name.Contains(productName)).ToList();
-                            subject = "עדכון על ירידת מחיר";
-                            body = ReadFile(@"./html/update.html");
-                            body = body.Replace("{productName}", productName);
-                            string shopDetails = "", productDetails = "";
-                            g.ForEach(x => { shopDetails += " שם: " + x.shop.Name + " מספר טלפון: " + x.shop.Phone + " איזור: " + x.shop.city.area.Name + " עיר: " + x.shop.city.Name; });
-                            g.ForEach(x => { productDetails += " שם: " + x.product.Name + " תיאור: " + x.product.Description + " מחיר: " + x.Price + " תמונה: " + x.product.Picture; });
-                            body = body.Replace("{shopDetails}", shopDetails);
-                            body = body.Replace("{productDetails}", productDetails);
-                            break;
-                        }
                     case "askUpdate":
                         {
                             user.IsUpdate = true;
@@ -47,13 +34,13 @@ namespace BLL
                             db.askUpdates.Add(askUpdate);
                             db.SaveChanges();
                             subject = "בקשתך לעדכון ירידת המחיר התקבלה";
-                            body = ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\ask.txt");
+                            body = ReadFile(@"./html/ask.html");
                             body = body.Replace("{serchName}", productName); break;
                         }
                     case "password":
                         {
                             subject = "הסיסמא שלך";
-                            body = ReadFile(@"C:\sara or\פרויקט גמר עם שרה אור\github\password.txt");
+                            body = ReadFile(@"./html/password.html");
                             body = body.Replace("{password}", user.Password); break;
                         }
                 }

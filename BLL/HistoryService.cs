@@ -34,7 +34,7 @@ namespace BLL
             }
         }
         // POST: api/Areas
-        public List<ProductInShopDTO> Post(HistoryDTO h)
+        public List<ProductWhithShop> Post(HistoryDTO h)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
@@ -47,8 +47,8 @@ namespace BLL
                         db.SaveChanges();
                     };
                 }
-                List<ProductInShopDTO> g = Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.product.Name.Contains(h.ProductName)).ToList());
-                return g;
+                return Convertion.ProductConvertion.Convert1(db.products.Where(x => x.Name.Contains(h.ProductName)||x.Description.Contains(h.ProductName)||(x.Description+" "+x.Name).Contains(h.ProductName)).ToList()).OrderBy(x=>x.Id).ToList();
+                
             }
         }
 

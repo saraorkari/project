@@ -96,9 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="html\search.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="html\ask.html" />
+    <Content Include="html\password.html" />
+    <Content Include="html\update.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

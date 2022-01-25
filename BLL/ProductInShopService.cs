@@ -41,16 +41,8 @@ namespace BLL
                 productInShop = db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId);
                 if (productInShop != null)
                 {
-                    if (productInShop.Price > p.Price)
-                    {
-                        db.askUpdates.Where(x => x.user.Active == true && x.user.IsUpdate == true ? mailService.SendMail("update", x.UserId, x.product.Name, out errMsg):true);
-                    }
                     productInShop.Price = p.Price;
-                    productInShop.product.Name = p.Name;
-                    productInShop.product.CategoryId = p.CategoryId;
                     productInShop.ProdDate = p.ProdDate;
-                    productInShop.product.Picture = p.Picture;
-                    productInShop.product.Description = p.Description;
                 }
                 else
                 {
@@ -60,15 +52,29 @@ namespace BLL
                         ShopId = p.shopId,
                         ProdDate = p.ProdDate,
                         Productld = p.Id,
-                        product = db.products.FirstOrDefault(x => x.Id == p.Id)
                     };
-                    productInShop.product.CategoryId = p.CategoryId;
-                    productInShop.product.Name = p.Name;
-                    productInShop.product.Picture = p.Picture;
-                    productInShop.product.Description = p.Description;
                     db.productInShops.Add(productInShop);
-                }
+                    
+                } 
                 db.SaveChanges();
+                if (db.productInShops.Where(x=>x.Productld==p.Id).Min(x=>x.Price)==p.Price)
+                {
+                        var f = db.askUpdates.Where(x => x.ProductId == p.Id && x.user.Active == true && x.user.IsUpdate == true).ToList();
+                        string subject = "עדכון על ירידת מחיר";
+                    f.ForEach(x =>
+                    {
+                        string body =  mailService.ReadFile(@"./html/update.html");
+                        body = body.Replace("{productName}", productInShop.product.Name);
+                        string shopDetails = " שם: " + productInShop.shop.Name + " מספר טלפון: " + productInShop.shop.Phone + 
+                        "עיר: " + productInShop.shop.city.Name;
+                        string productDetails = " שם: " + p.Name + " תיאור: " + p.Description + " מחיר: " + p.Price;
+                        body = body.Replace("{shopDetails}", shopDetails);
+                        body = body.Replace("{productDetails}", productDetails);
+                        mailService.send(x.user.Email, body, subject, "", out errMsg);
+                    });
+
+                }
+               
                 return Convertion.ProductInShopConvertion.Convert(productInShop);
             }
         }
