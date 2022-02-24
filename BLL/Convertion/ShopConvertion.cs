@@ -14,14 +14,13 @@ namespace BLL.Convertion
         {
             if (shop == null)
                 return null;
-            CityDTO cityDTO = new CityDTO(){Id = shop.CityId, Name = shop.CityName };
             return new shop()
             {
-                //Id = shop.Id,
+                Id = shop.Id,
                 Name = shop.Name,
                 CityId = shop.CityId,
                 Phone=shop.Phone,
-                city =CitiesConvertion.Convert(cityDTO)
+                Password=shop.Password
             };
         }
         public static ShopDTO Convert(shop shop)
@@ -34,7 +33,8 @@ namespace BLL.Convertion
                 Name = shop.Name,
                 CityId = shop.CityId,
                 Phone = shop.Phone,
-                CityName = shop.city.Name
+                CityName = shop.city?.Name,
+                Password = shop.Password
             };
         }
         public static List<shop> Convert(List<ShopDTO> shop)

@@ -20,11 +20,9 @@ namespace DAL
             this.shops = new HashSet<shop>();
         }
     
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> AreaId { get; set; }
     
-        public virtual area area { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<shop> shops { get; set; }
     }

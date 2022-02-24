@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL;
 using DTO;
+
 namespace BLL
 {
     public class ShopService
     {
+        UserService UserService = new UserService();
         public List<ShopDTO> Get()
         {
             using (dbprojectEntities db = new dbprojectEntities())
@@ -18,27 +20,53 @@ namespace BLL
         }
 
         // GET: api/Areas/5
-        public ShopDTO Get(int id)
+        public ShopDTO Get(int Id)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                Convertion.ShopConvertion.Convert(db.shops.FirstOrDefault(x => x.Id == id));
+                Convertion.ShopConvertion.Convert(db.shops.FirstOrDefault(x => x.Id == Id));
             }
             return null;
         }
-
-        // POST: api/Areas
-        public ShopDTO Post(ShopDTO s)
+        public ShopDTO Get(string Name, string Password)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                s.CityId = db.cities.FirstOrDefault(x => x.Name == s.CityName)?.Id;
-               
-                shop shop = db.shops.FirstOrDefault(x => x.Name == s.Name && x.CityId == s.CityId && x.Phone == s.Phone);
-                if (shop == null)
+                shop shop = db.shops.FirstOrDefault(x => (x.Name == Name) && x.Password == Password);
+                return Convertion.ShopConvertion.Convert(shop);
+            }
+        }
+        public bool IsPassExit(string pass)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                return db.shops.Any(x => x.Password == pass);
+            }
+        }
+        public string Pass()
+        {
+            StringBuilder builder = new StringBuilder();
+            Random rand;
+            while (!IsPassExit(builder.ToString()) && builder.Length < 4)
+            {
+                rand = new Random();
+                char ch = (char)rand.Next(23, 126);
+                builder.Append(ch);
+            }
+            return builder.ToString();
+        }
+        // POST: api/Areas
+        public ShopDTO Post(ShopDTO u, ref string Mass)
+        {
+            using (dbprojectEntities db = new dbprojectEntities())
+            {
+                if (IsPassExit(u.Password))
                 {
-                    shop = db.shops.Add(Convertion.ShopConvertion.Convert(s));
+                    string pass = Pass();
+                    Mass = " סיסמא קיימת החלף סיסמא - תוכל להשתמש בסיסמא" + pass + " ";
+                    return null;
                 }
+                shop shop = db.shops.Add(Convertion.ShopConvertion.Convert(u));
                 db.SaveChanges();
                 return Convertion.ShopConvertion.Convert(shop);
             }

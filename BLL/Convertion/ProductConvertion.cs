@@ -18,7 +18,6 @@ namespace BLL.Convertion
             {
                 Id = product.Id,
                 Name = product.Name,
-                Description = product.Description,
                 Picture = product.Picture,
                 CategoryId = product.CategoryId
             };
@@ -31,7 +30,6 @@ namespace BLL.Convertion
             {
                 Id = product.Id,
                 Name = product.Name,
-                Description = product.Description,
                 Picture = product.Picture,
                 CategoryId = product.CategoryId
             };
@@ -44,7 +42,6 @@ namespace BLL.Convertion
             {
                 Id = product.Id,
                 Name = product.Name,
-                Description = product.Description,
                 Picture = product.Picture,
                 CategoryId = product.CategoryId,
                 ProductInShops=ProductInShopConvertion.Convert(product.productInShops.ToList())

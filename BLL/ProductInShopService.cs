@@ -13,45 +13,45 @@ namespace BLL
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-
                 return Convertion.ProductInShopConvertion.Convert(db.productInShops.ToList());
             }
         }
 
         // GET: api/Areas/5
-        public List<ProductInShopDTO> Get(int shopId, int categoryId)
+        public List<ProductInShopDTO> Get(int shopId)
         {
-            List<ProductInShopDTO> productInShop;
+            //List<ProductInShopDTO> productInShop;
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                if (shopId == -1) return Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.product.CategoryId == categoryId).ToList());
-                productInShop = Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.ShopId == shopId && x.product.CategoryId == categoryId).ToList());
+                 return Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x=>x.ShopId==shopId).ToList());
+                //productInShop = Convertion.ProductInShopConvertion.Convert(db.productInShops.Where(x => x.ShopId == shopId && x.product.CategoryId == categoryId).ToList());
             }
-            return productInShop;
+            //productInShop.GroupBy(x=>x.Productld);
+            //return productInShop;
         }
 
         // POST: api/Areas
-        public ProductInShopDTO Post(ProductDTO p)
+        public ProductInShopDTO Post(ProductInShopDTO    p)
         {
             productInShop productInShop;
             MailService mailService = new MailService();
             string errMsg;
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                productInShop = db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.shopId);
+                productInShop = db.productInShops.FirstOrDefault(x => x.Productld == p.Id && x.ShopId == p.ShopId);
                 if (productInShop != null)
                 {
                     productInShop.Price = p.Price;
-                    productInShop.ProdDate = p.ProdDate;
+                    productInShop.Describe = p.Description;
                 }
                 else
                 {
                     productInShop = new productInShop()
                     {
                         Price = p.Price,
-                        ShopId = p.shopId,
-                        ProdDate = p.ProdDate,
+                        ShopId = p.ShopId,
                         Productld = p.Id,
+                        Describe=p.Description
                     };
                     db.productInShops.Add(productInShop);
                     
@@ -63,12 +63,13 @@ namespace BLL
                         string subject = "עדכון על ירידת מחיר";
                     f.ForEach(x =>
                     {
-                        string body =  mailService.ReadFile(@"./html/update.html");
+                        string body =  mailService.ReadFile(@".\html\update.html");
                         body = body.Replace("{productName}", productInShop.product.Name);
                         string shopDetails = " שם: " + productInShop.shop.Name + " מספר טלפון: " + productInShop.shop.Phone + 
                         "עיר: " + productInShop.shop.city.Name;
-                        string productDetails = " שם: " + p.Name + " תיאור: " + p.Description + " מחיר: " + p.Price;
+                        string productDetails = " שם: " + p.Product.Name + " תיאור: " + p.Description + " מחיר: " + p.Price;
                         body = body.Replace("{shopDetails}", shopDetails);
+
                         body = body.Replace("{productDetails}", productDetails);
                         mailService.send(x.user.Email, body, subject, "", out errMsg);
                     });

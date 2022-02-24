@@ -20,12 +20,21 @@ namespace BLL
 
         // GET: api/Areas/5
 
-        public List<ProductDTO> Get(int id)
+        //public List<ProductDTO> Get(int categoryId)
+        //{
+        //    using (dbprojectEntities db = new dbprojectEntities())
+        //    {
+        //        return Convertion.ProductConvertion.Convert(db.products.Where(x => x.CategoryId == categoryId).ToList());
+        //    }
+        //}
+        public List<ProductWhithShop> Get(int categoryId)
         {
             using (dbprojectEntities db = new dbprojectEntities())
             {
-                return Convertion.ProductConvertion.Convert(db.products.Where(x => x.CategoryId == id).ToList());
+                List<ProductWhithShop> shops= Convertion.ProductConvertion.Convert1(db.products.Where(x => x.CategoryId == categoryId).ToList()).OrderBy(x => x.Id).ToList();
+                return shops;
             }
+            
         }
         public List<ProductDTO> Get(string SearcText)
         {
@@ -35,6 +44,7 @@ namespace BLL
             }
             return null;
         }
+
         // POST: api/Areas
         public ProductDTO Post(ProductDTO p)
         {
@@ -56,7 +66,6 @@ namespace BLL
                 {
                     ps.Name = p.Name;
                     ps.Picture = p.Picture;
-                    ps.Description = p.Description;
                     ps.CategoryId = p.CategoryId;
                     db.SaveChanges();
                     return Convertion.ProductConvertion.Convert(ps);

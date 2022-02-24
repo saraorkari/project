@@ -34,13 +34,13 @@ namespace BLL
                             db.askUpdates.Add(askUpdate);
                             db.SaveChanges();
                             subject = "בקשתך לעדכון ירידת המחיר התקבלה";
-                            body = ReadFile(@"./html/ask.html");
+                            body = ReadFile(@".\html\ask.html");
                             body = body.Replace("{serchName}", productName); break;
                         }
                     case "password":
                         {
                             subject = "הסיסמא שלך";
-                            body = ReadFile(@"./html/password.html");
+                            body = ReadFile(@".\html\password.html");
                             body = body.Replace("{password}", user.Password); break;
                         }
                 }

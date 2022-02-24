@@ -47,7 +47,6 @@ namespace BLL
                 if (cc != null)
                 {
                     cc.Name = c.Name;
-                    cc.AreaId = c.AreaId;
                     db.SaveChanges();
                     return Convertion.CitiesConvertion.Convert(cc);
                 }

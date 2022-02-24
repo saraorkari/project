@@ -23,9 +23,13 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public List<ProductDTO> Get(int id)
+        //public List<ProductDTO> Get(int categoryId)
+        //{
+        //    return ProductService.Get(categoryId);
+        //}
+        public List<ProductWhithShop> Get(int categoryId)
         {
-            return ProductService.Get(id);
+            return ProductService.Get(categoryId);
         }
 
         // POST: api/Areas

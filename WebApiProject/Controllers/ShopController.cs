@@ -22,15 +22,18 @@ namespace WebApiProject.Controllers
         }
 
         // GET: api/Areas/5
-        public ShopDTO Get(int id)
+        public IHttpActionResult Get(string Name, string Password)
         {
-            return ShopService.Get(id);
+            ShopDTO x = ShopService.Get(Name, Password);
+            if (x != null)
+                return Ok(x);
+            return BadRequest();
         }
        
         // POST: api/Areas
         [HttpPost]
         
-        public IHttpActionResult Post( ShopDTO x)
+        public IHttpActionResult Post(ShopDTO x)
         {
             if (x == null)
             {
@@ -38,7 +41,11 @@ namespace WebApiProject.Controllers
             }
             //if (x.Id == 0)
             //    return NotFound();
-            return Ok(ShopService.Post( x));
+            string mass="";
+            x = ShopService.Post(x, ref mass);
+            if (x != null)
+                return Ok(x);
+            return BadRequest(mass);
         }
 
         // PUT: api/Areas/5
