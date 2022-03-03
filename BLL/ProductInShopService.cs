@@ -43,6 +43,8 @@ namespace BLL
                 {
                     productInShop.Price = p.Price;
                     productInShop.Describe = p.Description;
+                    db.SaveChanges();
+
                 }
                 else
                 {
@@ -53,25 +55,30 @@ namespace BLL
                         Productld = p.Id,
                         Describe=p.Description
                     };
-                    db.productInShops.Add(productInShop);
-                    
+                    productInShop= db.productInShops.Add(productInShop);
+                     db.SaveChanges();
+                    productInShop = db.productInShops.Include("product").Include("shop").FirstOrDefault(x => x.Id == productInShop.Id);
                 } 
-                db.SaveChanges();
+               
+                
+               
+
                 if (db.productInShops.Where(x=>x.Productld==p.Id).Min(x=>x.Price)==p.Price)
                 {
                         var f = db.askUpdates.Where(x => x.ProductId == p.Id && x.user.Active == true && x.user.IsUpdate == true).ToList();
                         string subject = "עדכון על ירידת מחיר";
                     f.ForEach(x =>
                     {
-                        string body =  mailService.ReadFile(@".\html\update.html");
-                        body = body.Replace("{productName}", productInShop.product.Name);
-                        string shopDetails = " שם: " + productInShop.shop.Name + " מספר טלפון: " + productInShop.shop.Phone + 
-                        "עיר: " + productInShop.shop.city.Name;
-                        string productDetails = " שם: " + p.Product.Name + " תיאור: " + p.Description + " מחיר: " + p.Price;
-                        body = body.Replace("{shopDetails}", shopDetails);
+                        //string body =  mailService.ReadFile(@"./html/update.html");
+                        string body = mailService.ReadFile(@"C:/sara or/פרויקט גמר עם שרה אור/github/project/WebApiProject/mail/update.txt");
 
+                        body = body.Replace("{productName}", productInShop.product.Name);
+                        string shopDetails = "<b> שם: </b>" + productInShop.shop.Name + "<b> מספר טלפון: </b>" + productInShop.shop.Phone +
+                        "<b> עיר: </b>" + productInShop.shop.city.Name;
+                        string productDetails = "<b> שם: </b>" + productInShop.product.Name + "<b> תיאור: </b>" + p.Description + "<b> מחיר: </b>" + p.Price;
+                        body = body.Replace("{shopDetails}", shopDetails);
                         body = body.Replace("{productDetails}", productDetails);
-                        mailService.send(x.user.Email, body, subject, "", out errMsg);
+                        mailService.send(x.user.Email, body, subject, "saraor1412@gmail.com", out errMsg);
                     });
 
                 }

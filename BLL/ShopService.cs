@@ -66,6 +66,8 @@ namespace BLL
                     Mass = " סיסמא קיימת החלף סיסמא - תוכל להשתמש בסיסמא" + pass + " ";
                     return null;
                 }
+                u.CityId = db.cities.FirstOrDefault(x => x.Name == u.CityName) == null?1:db.cities.FirstOrDefault(x => x.Name == u.CityName).Id;
+
                 shop shop = db.shops.Add(Convertion.ShopConvertion.Convert(u));
                 db.SaveChanges();
                 return Convertion.ShopConvertion.Convert(shop);

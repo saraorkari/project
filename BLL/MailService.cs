@@ -34,13 +34,15 @@ namespace BLL
                             db.askUpdates.Add(askUpdate);
                             db.SaveChanges();
                             subject = "בקשתך לעדכון ירידת המחיר התקבלה";
-                            body = ReadFile(@".\html\ask.html");
+                            body = ReadFile(@"C:/sara or/פרויקט גמר עם שרה אור/github/project/WebApiProject/mail/ask.txt");
                             body = body.Replace("{serchName}", productName); break;
                         }
                     case "password":
                         {
                             subject = "הסיסמא שלך";
-                            body = ReadFile(@".\html\password.html");
+                            //body = ReadFile(@"./html/password.html");
+                            body = ReadFile(@"C:/sara or/פרויקט גמר עם שרה אור/github/project/WebApiProject/mail/password.txt");
+
                             body = body.Replace("{password}", user.Password); break;
                         }
                 }

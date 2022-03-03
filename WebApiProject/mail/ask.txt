@@ -1,0 +1,4 @@
+<div>
+    <p>בקשתך לעדכון ירידת מחיר למוצר <b>{serchName}</b> התקבלה</p>
+</div>
+    <a href="http://localhost:4200/">CE - P</a>
